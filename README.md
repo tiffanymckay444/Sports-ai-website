@@ -1,5 +1,6 @@
-# SPORTS AI Website V1
-Responsive website connected to the existing V24 backend.
-Open `index.html` to preview. For deployment, upload `index.html`, `styles.css`, and `app.js` to GitHub Pages, Netlify, Vercel, or Cloudflare Pages.
-Backend: https://sports-ai-backend-1-qh65.onrender.com
-No SportsDataIO API key is stored in the website.
+# SPORTS AI Website V2
+Actual web dashboard connected to SPORTS AI V24.
+Upload index.html, styles.css and app.js to the root of the GitHub Pages repository to replace V1.
+Live backend: https://sports-ai-backend-1-qh65.onrender.com
+Endpoints used: /api/v24/status, /api/v24/predictions, /api/v24/dashboard
+No SportsDataIO key is included.

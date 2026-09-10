@@ -1,11 +1,49 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SPORTS AI</title><link rel="stylesheet" href="styles.css"></head><body>
-<header><div class="logo">S<span>AI</span></div><nav><a href="#predictions">Predictions</a><a href="#tracking">Tracking</a><a href="#how">How it works</a><button onclick="showPro()">SPORTS AI PRO</button></nav></header>
-<section class="hero"><div><small>AI-POWERED SPORTS INTELLIGENCE</small><h1>Know the game<br><em>before it starts.</em></h1><p>SPORTS AI combines real sports data, team performance, recent form, injuries and other signals to create transparent game predictions.</p><a class="primary" href="#predictions">View today's predictions</a></div><div class="heroCard"><small>TODAY'S AI SIGNAL</small><h3>SPORTS AI</h3><div class="teams">Home Team <b>VS</b> Away Team</div><h2>Home Team</h2><strong>72% confidence</strong><div class="bar"><i></i></div><p>Live predictions load from your SPORTS AI backend.</p></div></section>
-<section class="stats"><div><b id="games">—</b><small>Games analyzed</small></div><div><b id="preds">—</b><small>AI predictions</small></div><div><b id="teams">—</b><small>Teams profiled</small></div><div><b>24/7</b><small>Data intelligence</small></div></section>
-<section id="predictions"><small>LIVE FROM SPORTS AI</small><h2>Today's predictions</h2><div id="notice">Connecting…</div><div id="grid"></div></section>
-<section id="tracking" class="dark"><small>TRANSPARENT RESULTS</small><h2>Track the model.</h2><div class="record"><div>Overall<br><b id="record">—</b></div><div>Wins<br><b id="wins">—</b></div><div>Losses<br><b id="losses">—</b></div><div>Pushes<br><b id="pushes">—</b></div></div><p>Predictions are statistical estimates, not guaranteed outcomes.</p></section>
-<section id="how"><small>HOW IT WORKS</small><h2>From data to a simple signal.</h2><div class="steps"><article><b>01</b><h3>Collect</h3><p>Scores, stats, injuries, lineups and other available sports data.</p></article><article><b>02</b><h3>Analyze</h3><p>The intelligence engine weighs form, margins, home advantage and availability.</p></article><article><b>03</b><h3>Explain</h3><p>Each prediction has a confidence score and reasons behind the signal.</p></article></div></section>
-<section class="pro"><div><small>SPORTS AI PRO</small><h2>Go deeper than the score.</h2><p>Advanced predictions, player intelligence, deeper analysis and AI sports chat.</p></div><button class="primary" onclick="showPro()">Join PRO waitlist</button></section>
-<footer><div class="logo">S<span>AI</span></div><p>© 2026 SPORTS AI</p></footer>
-<div id="modal" class="modal"><div class="modalbox"><button class="x" onclick="hidePro()">×</button><small>SPORTS AI PRO</small><h2>Premium sports intelligence.</h2><p>Join the waitlist for the upcoming PRO experience.</p><input placeholder="Your email" type="email"><button class="primary" onclick="alert('Thanks! You are on the PRO waitlist.')">Join waitlist</button></div></div>
-<script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SPORTS AI — Intelligence Dashboard</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top"><a class="brand" href="#"><span>S</span> SPORTS <b>AI</b></a>
+<nav><a href="#today">Today</a><a href="#predictions">Predictions</a><a href="#tracking">Tracking</a><button onclick="showPro()">SPORTS AI PRO</button></nav></header>
+
+<main>
+<section class="appHero">
+<div><div class="eyebrow">SPORTS AI • V24 PRO INTELLIGENCE</div><h1>Your daily sports intelligence.</h1><p>One place to see today's games, AI signals, confidence and the reasons behind every prediction.</p></div>
+<div class="connection"><i></i><span id="connection">Connecting to live data…</span><button onclick="loadAll()">↻</button></div>
+</section>
+
+<section id="today" class="content">
+<div class="sectionTitle"><div><small>OVERVIEW</small><h2>Today's dashboard</h2></div><div class="date" id="date"></div></div>
+<div class="metrics"><div><span>Games</span><strong id="games">—</strong></div><div><span>Predictions</span><strong id="preds">—</strong></div><div><span>Teams profiled</span><strong id="teams">—</strong></div><div><span>Model</span><strong>V24</strong></div></div>
+
+<div class="sports" id="sportFilters">
+<button class="active" data-sport="ALL">All</button><button data-sport="NBA">NBA</button><button data-sport="MLB">MLB</button><button data-sport="NHL">NHL</button><button data-sport="NFL">NFL</button><button data-sport="SOCCER">Soccer</button>
+</div>
+
+<div class="sectionTitle" id="predictions"><div><small>AI SIGNALS</small><h2>Top predictions</h2></div></div>
+<div id="grid" class="grid"><div class="loading">Loading live predictions…</div></div>
+</section>
+
+<section class="dark" id="tracking">
+<div class="content">
+<div class="sectionTitle"><div><small>PERFORMANCE</small><h2>Prediction tracking</h2></div><div class="muted">The model is tracked automatically.</div></div>
+<div class="record"><div><span>Overall</span><strong id="record">—</strong></div><div><span>Wins</span><strong id="wins">—</strong></div><div><span>Losses</span><strong id="losses">—</strong></div><div><span>Pushes</span><strong id="pushes">—</strong></div></div>
+</div>
+</section>
+
+<section class="content">
+<div class="sectionTitle"><div><small>WHY SPORTS AI</small><h2>Simple on the outside. Deep underneath.</h2></div></div>
+<div class="features"><article><b>01</b><h3>Real data</h3><p>Predictions are powered by the sports data flowing through your backend.</p></article><article><b>02</b><h3>Explainable AI</h3><p>See the factors and reasons behind each model signal instead of a mystery pick.</p></article><article><b>03</b><h3>Daily learning</h3><p>Results are evaluated automatically so the model's history can be measured over time.</p></article></div>
+</section>
+
+<section class="pro"><div><small>SPORTS AI PRO</small><h2>Unlock the full analyst.</h2><p>Premium access can include all predictions, player intelligence, advanced analysis and AI sports chat.</p></div><button onclick="showPro()">Explore PRO</button></section>
+</main>
+
+<footer><a class="brand" href="#"><span>S</span> SPORTS <b>AI</b></a><span>Statistical estimates only — no guaranteed outcomes.</span></footer>
+
+<div id="modal" class="modal"><div class="modalBox"><button class="close" onclick="hidePro()">×</button><div class="eyebrow">SPORTS AI PRO</div><h2>Premium intelligence.</h2><p>We're building the PRO experience around deeper predictions, player analysis and AI sports chat.</p><input id="email" type="email" placeholder="Email address"><button class="full" onclick="join()">Join the PRO waitlist</button><div id="msg"></div></div></div>
+<script src="app.js"></script>
+</body></html>
