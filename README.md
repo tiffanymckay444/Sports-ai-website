@@ -1,6 +1,5 @@
-# SPORTS AI Website V2
-Actual web dashboard connected to SPORTS AI V24.
-Upload index.html, styles.css and app.js to the root of the GitHub Pages repository to replace V1.
-Live backend: https://sports-ai-backend-1-qh65.onrender.com
-Endpoints used: /api/v24/status, /api/v24/predictions, /api/v24/dashboard
-No SportsDataIO key is included.
+# SPORTS AI Website V2.1
+Polished live dashboard connected to the V24 backend. V2.1 improves prediction response mapping so team names can be read from common nested V24 game/team structures.
+Replace the existing index.html, styles.css and app.js in the GitHub Pages repository.
+Backend: https://sports-ai-backend-1-qh65.onrender.com
+No SportsDataIO API key is included.
