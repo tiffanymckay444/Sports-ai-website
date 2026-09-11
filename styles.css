@@ -19,3 +19,11 @@
 .detailsBtn{display:block;width:100%;margin-top:12px;border:0;border-radius:10px;padding:12px 14px;background:#071018;color:#fff;font-weight:900;font-size:11px;letter-spacing:.3px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .detailsBtn:active{transform:scale(.99)}
 .card.clickable{cursor:pointer;-webkit-tap-highlight-color:transparent}
+
+.trackingSection{max-width:1100px;margin:34px auto 70px;padding:0 22px}.sectionTitle h2{margin:5px 0;font-size:30px;letter-spacing:-1px}.sectionTitle p{margin:0;color:#748289}
+.trackerStats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0}.trackerStats>div{background:#fff;border:1px solid #dfe7e9;border-radius:14px;padding:15px}.trackerStats b{display:block;font-size:25px}.trackerStats span{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#7a8990;font-weight:900}
+.trackedList{display:grid;gap:8px}.trackrow{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid #dfe7e9;border-radius:13px;padding:13px 15px}.trackrow>div{flex:1}.trackrow b{display:block;font-size:14px}.trackrow small{display:block;margin-top:4px;color:#7a8990;font-size:10px}.trackrow>button{border:0;background:#eef2f3;border-radius:8px;width:28px;height:28px;color:#6b7a80;font-size:18px}
+.result{font-size:10px;font-weight:900;padding:7px 9px;border-radius:7px;background:#eef2f3}.result.win{background:#e5faeb;color:#159b51}.result.loss{background:#fde9e9;color:#b53a3a}.result.push{background:#fff5dc;color:#946d00}.result.pending{background:#eef2f3;color:#718087}
+.cardactions{display:flex;gap:8px;align-items:stretch}.cardactions .detailsBtn{flex:1}.trackBtn{margin-top:12px;border:1px solid #d7e0e3;background:#fff;color:#16242b;border-radius:10px;padding:12px 14px;font-weight:900;font-size:10px;white-space:nowrap}.trackBtn.tracked{background:#e8f8ed;border-color:#bce8ca;color:#159b51}
+.empty.small{padding:16px;font-size:12px}
+@media(max-width:650px){.trackerStats{grid-template-columns:repeat(3,1fr)}.cardactions{flex-direction:column}.trackBtn{width:100%}}

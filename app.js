@@ -115,6 +115,54 @@ function impact(p){
   const f=p.features||{};
   return val(p,["injury_impact","injuryImpact"],val(f,["injury_impact","injuryImpact"],null));
 }
+
+const TRACK_KEY="sports_ai_prediction_tracking_v26";
+function loadTracked(){
+  try{return JSON.parse(localStorage.getItem(TRACK_KEY)||"{}")}catch{return {}}
+}
+function saveTracked(x){localStorage.setItem(TRACK_KEY,JSON.stringify(x))}
+function trackId(p){
+  return String(val(p,["external_id","externalId","prediction_id","predictionId","GameID","gameId","id","Id"],`${val(p,["sport","Sport"],"sport")}-${team(p,"away")}-${team(p,"home")}-${gameMeta(p)||p.__index}`))
+}
+function outcome(p){
+  const raw=val(p,["evaluation","result","outcome","status","Status"],null);
+  if(raw&&typeof raw==="object") return String(val(raw,["result","outcome","status"],"")).toUpperCase();
+  const s=String(raw||"").toUpperCase();
+  if(["WIN","LOSS","PUSH"].includes(s)) return s;
+  const ev=p.evaluation||p.Evaluation;
+  if(ev&&typeof ev==="object"){
+    const x=String(val(ev,["result","outcome","status"],"")).toUpperCase();
+    if(["WIN","LOSS","PUSH"].includes(x)) return x;
+  }
+  return "";
+}
+function localOutcome(p){
+  const t=loadTracked()[trackId(p)];
+  return t?.result||outcome(p)||"PENDING";
+}
+function toggleTrack(index){
+  const p=all[index]; if(!p)return;
+  const id=trackId(p), db=loadTracked();
+  if(db[id]) delete db[id];
+  else db[id]={result: outcome(p)||"PENDING", addedAt:new Date().toISOString(), sport:val(p,["sport","Sport"],"SPORT"), matchup:`${team(p,"away")} @ ${team(p,"home")}`, pick:val(p,["pick","Pick","prediction","Prediction","selection","Selection"],"Pending")};
+  saveTracked(db); render(); updateTracking();
+}
+function updateTracking(){
+  const db=loadTracked(), entries=Object.entries(db);
+  trackedCount.textContent=entries.length;
+  const winsN=entries.filter(([,x])=>x.result==="WIN").length;
+  const lossesN=entries.filter(([,x])=>x.result==="LOSS").length;
+  const pushesN=entries.filter(([,x])=>x.result==="PUSH").length;
+  trackedWins.textContent=winsN; trackedLosses.textContent=lossesN; trackedPushes.textContent=pushesN;
+  const decided=winsN+lossesN+pushesN;
+  trackedPct.textContent=decided?Math.round((winsN/decided)*100)+"%":"—";
+  const list=all.filter(p=>db[trackId(p)]);
+  trackedList.innerHTML=list.length?list.map(p=>{
+    const r=localOutcome(p);
+    return `<div class="trackrow"><div><b>${esc(team(p,"away"))} @ ${esc(team(p,"home"))}</b><small>${esc(String(val(p,["sport","Sport"],"SPORT")).toUpperCase())} • Pick ${esc(val(p,["pick","Pick","prediction","Prediction"],"—"))}</small></div><span class="result ${r.toLowerCase()}">${esc(r)}</span><button type="button" onclick="toggleTrack(${p.__index})">×</button></div>`
+  }).join(""):`<div class="empty small">No saved predictions yet. Tap “TRACK” on any prediction.</div>`;
+}
+
 function render(s="ALL"){
   let a=s==="ALL"?all:all.filter(p=>String(val(p,["sport","Sport"],"")).toUpperCase()===s);
   if(!a.length){grid.innerHTML='<div class="empty">No predictions available for this sport right now.</div>';return}
@@ -131,7 +179,10 @@ function render(s="ALL"){
       <div class="bar"><i style="width:${Math.max(0,Math.min(100,c))}%"></i></div>
       <div class="why">${esc(reasonsText)}</div>
       <div class="tags"><span class="tag">V24 PRO INTELLIGENCE</span><span class="tag">EXPLAINABLE</span></div>
-      <button class="detailsBtn" type="button" onclick="event.stopPropagation();showDetail(${p.__index})">VIEW AI ANALYSIS →</button>
+      <div class="cardactions">
+        <button class="detailsBtn" type="button" onclick="event.stopPropagation();showDetail(${p.__index})">VIEW AI ANALYSIS →</button>
+        <button class="trackBtn ${loadTracked()[trackId(p)]?'tracked':''}" type="button" onclick="event.stopPropagation();toggleTrack(${p.__index})">${loadTracked()[trackId(p)]?'✓ TRACKED':'＋ TRACK'}</button>
+      </div>
     </article>`
   }).join("")
 }
@@ -172,7 +223,7 @@ async function loadAll(){
     all=unwrapRows(p,["predictions"]).map((x,i)=>({...x,__index:i})); render();
     record.textContent=`${val(d,["wins"],0)}-${val(d,["losses"],0)}-${val(d,["pushes"],0)}`;
     wins.textContent=val(d,["wins"],0);losses.textContent=val(d,["losses"],0);pushes.textContent=val(d,["pushes"],0);
-    connection.textContent=`Live • ${all.length} predictions loaded`;
+    connection.textContent=`Live • ${all.length} predictions loaded`; updateTracking();
   }catch(e){console.error("SPORTS AI V2.4 load error",e);connection.textContent="Backend unavailable";grid.innerHTML='<div class="empty">The dashboard is online, but the live prediction service is temporarily unavailable.</div>'}
 }
 document.querySelectorAll("#filters button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render(b.dataset.sport)});
@@ -195,3 +246,5 @@ document.addEventListener("click", function(e){
     }
   }
 });
+
+updateTracking();

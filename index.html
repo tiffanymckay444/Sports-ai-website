@@ -9,7 +9,19 @@
 <section class="content"><div class="heading"><div><small>LIVE DASHBOARD</small><h2>Games & predictions</h2></div><span id="date"></span></div>
 <div class="metrics"><div><small>GAMES</small><b id="games">—</b></div><div><small>PREDICTIONS</small><b id="preds">—</b></div><div><small>TEAMS</small><b id="teams">—</b></div><div><small>MODEL</small><b>V24</b></div></div>
 <div class="filters" id="filters"><button class="active" data-sport="ALL">All</button><button data-sport="NBA">NBA</button><button data-sport="MLB">MLB</button><button data-sport="NHL">NHL</button><button data-sport="NFL">NFL</button><button data-sport="SOCCER">Soccer</button></div>
-<div id="grid" class="grid"><div class="empty">Loading live predictions…</div></div><div id="detailModal" class="modal detail-modal" aria-hidden="true"><div class="detailbox"><button class="x" onclick="hideDetail()">×</button><div id="detailContent"></div></div></div></section>
+<div id="grid" class="grid"><div class="empty">Loading live predictions…</div></div>
+<section class="trackingSection">
+  <div class="sectionTitle"><div><span class="eyebrow">YOUR TRACKER</span><h2>My Predictions</h2><p>Save picks and follow their results over time.</p></div></div>
+  <div class="trackerStats">
+    <div><b id="trackedCount">0</b><span>Tracked</span></div>
+    <div><b id="trackedWins">0</b><span>Wins</span></div>
+    <div><b id="trackedLosses">0</b><span>Losses</span></div>
+    <div><b id="trackedPushes">0</b><span>Pushes</span></div>
+    <div><b id="trackedPct">—</b><span>Win %</span></div>
+  </div>
+  <div id="trackedList" class="trackedList"><div class="empty small">No saved predictions yet. Tap “TRACK” on any prediction.</div></div>
+</section>
+<div id="detailModal" class="modal detail-modal" aria-hidden="true"><div class="detailbox"><button class="x" onclick="hideDetail()">×</button><div id="detailContent"></div></div></div></section>
 
 <section class="dark" id="tracking"><div class="content"><div class="heading"><div><small>TRACKING</small><h2>Model performance</h2></div></div>
 <div class="record"><div><small>OVERALL</small><b id="record">—</b></div><div><small>WINS</small><b id="wins">—</b></div><div><small>LOSSES</small><b id="losses">—</b></div><div><small>PUSHES</small><b id="pushes">—</b></div></div></div></section>
