@@ -435,7 +435,16 @@ function handleAccount(e){
   status.textContent="Connecting securely…";
   const endpoint=accountMode==="signup"?"/api/auth/register":"/api/auth/login";
   fetch(`${API}${endpoint}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(accountMode==="signup"?{name,email,password}:{email,password})})
-  .then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Account request failed.");return d;})
+  .then(async r=>{
+    const raw=await r.text();
+    let d={};
+    try{d=raw?JSON.parse(raw):{};}catch{d={message:raw};}
+    if(!r.ok){
+      const detail=d.error||d.message||`HTTP ${r.status}`;
+      throw new Error(`Sign-in service returned ${r.status}: ${detail}`);
+    }
+    return d;
+  })
   .then(d=>{
     if(!d.token||!d.user)throw new Error("The account service returned an incomplete response.");
     localStorage.setItem(ACCOUNT_TOKEN_KEY,d.token);localStorage.setItem(ACCOUNT_USER_KEY,JSON.stringify(d.user));
@@ -443,6 +452,14 @@ function handleAccount(e){
     document.getElementById("accountPassword").value="";
     setTimeout(closeAccount,700);
   })
-  .catch(err=>{const msg=String(err.message||err);status.textContent=(msg.includes("Failed to fetch")||msg.includes("NetworkError"))?"Unable to reach SPORTS AI right now. Please try again.":"Error: "+msg;});
+  .catch(err=>{
+    const msg=String(err.message||err);
+    if(msg.includes("Failed to fetch")||msg.includes("NetworkError")){
+      status.textContent="Unable to reach SPORTS AI right now. Please try again.";
+    }else{
+      status.textContent="Error: "+msg;
+    }
+    console.error("SPORTS AI account request",{endpoint,email,status:msg});
+  });
 }
 loadCurrentAccount();
