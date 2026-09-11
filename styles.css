@@ -30,3 +30,11 @@
 
 .detailTrackBtn{margin-top:15px;width:100%;border:0;border-radius:11px;padding:14px;background:#071018;color:#fff;font-weight:900;font-size:11px;letter-spacing:.4px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .detailTrackBtn.tracked{background:#e8f8ed;color:#159b51;border:1px solid #bce8ca}
+
+/* V2.8: always-visible prediction actions */
+.v28actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.v28actions button{display:block!important;visibility:visible!important;opacity:1!important;min-height:46px;border-radius:11px;font-weight:900;font-size:11px;letter-spacing:.4px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.v28analysis{border:1px solid #d7e1e4;background:#071018;color:#fff}
+.v28track{border:2px solid #159b51!important;background:#fff;color:#159b51}
+.v28track.isTracked{background:#e8f8ed!important;color:#159b51!important}
+@media(max-width:650px){.v28actions{grid-template-columns:1fr 1fr}.v28actions button{min-height:48px}}

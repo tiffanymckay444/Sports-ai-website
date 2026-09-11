@@ -1,12 +1,13 @@
-# SPORTS AI Website V2.7
+# SPORTS AI Website V2.8
 
-V2.7 improves prediction tracking access on mobile.
+V2.8 is the simplified tracking fix.
 
 ## New
-- Large **TRACK THIS PREDICTION** button inside every AI Analysis screen.
-- Tracking remains available even when a prediction is marked LOCKED.
-- Tracked state updates immediately.
-- Existing card TRACK button and My Predictions tracker remain.
-- Saved predictions persist locally on the user's device.
+- A large, always-visible **＋ TRACK** button is placed directly on every prediction card.
+- The button is independent of `LOCKED` status.
+- Tapping it immediately saves the prediction to **My Predictions**.
+- The button changes to **✓ TRACKED** after saving.
+- VIEW AI ANALYSIS remains beside it.
+- Mobile-first styling prevents the control from being hidden.
 
 Backend remains connected to V24.

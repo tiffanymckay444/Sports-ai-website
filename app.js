@@ -179,9 +179,10 @@ function render(s="ALL"){
       <div class="bar"><i style="width:${Math.max(0,Math.min(100,c))}%"></i></div>
       <div class="why">${esc(reasonsText)}</div>
       <div class="tags"><span class="tag">V24 PRO INTELLIGENCE</span><span class="tag">EXPLAINABLE</span></div>
-      <div class="cardactions">
-        <button class="detailsBtn" type="button" onclick="event.stopPropagation();showDetail(${p.__index})">VIEW AI ANALYSIS →</button>
-        <button class="trackBtn ${loadTracked()[trackId(p)]?'tracked':''}" type="button" onclick="event.stopPropagation();toggleTrack(${p.__index})">${loadTracked()[trackId(p)]?'✓ TRACKED':'＋ TRACK'}</button>
+      <div class="tags"><span class="tag">V24 PRO INTELLIGENCE</span><span class="tag">EXPLAINABLE</span></div>
+      <div class="v28actions">
+        <button class="v28analysis" type="button" onclick="event.stopPropagation();showDetail(${p.__index})">VIEW AI ANALYSIS</button>
+        <button class="v28track ${loadTracked()[trackId(p)]?'isTracked':''}" type="button" onclick="event.stopPropagation();toggleTrack(${p.__index})">${loadTracked()[trackId(p)]?'✓ TRACKED':'＋ TRACK'}</button>
       </div>
     </article>`
   }).join("")
