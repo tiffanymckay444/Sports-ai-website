@@ -301,7 +301,8 @@ async function loadAll(){
     all=unwrapRows(p,["predictions"]).map((x,i)=>({...x,__index:i})); render(); updateHomeDashboard();
     record.textContent=`${val(d,["wins"],0)}-${val(d,["losses"],0)}-${val(d,["pushes"],0)}`;
     wins.textContent=val(d,["wins"],0);losses.textContent=val(d,["losses"],0);pushes.textContent=val(d,["pushes"],0);
-    connection.textContent=`Live • ${all.length} predictions loaded`; updateTracking();
+    const updatedAt=new Date().toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+    connection.textContent=`Live • ${all.length} predictions • Updated ${updatedAt}`; updateTracking();
   }catch(e){console.error("SPORTS AI V2.4 load error",e);connection.textContent="Backend unavailable";grid.innerHTML='<div class="empty">The dashboard is online, but the live prediction service is temporarily unavailable.</div>'}
 }
 document.querySelectorAll("#filters button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");render(b.dataset.sport)});
@@ -311,8 +312,12 @@ function hidePro(){modal.classList.remove("show")}
 function join(){const e=document.getElementById("email").value;if(e.includes("@"))msg.textContent="You're on the PRO waitlist."}
 window.addEventListener("keydown",e=>{if(e.key==="Escape"){hideDetail();hidePro()}})
 loadAll();
+// V3.8 live refresh: keep today's games/predictions current without a full page reload.
+let liveRefreshTimer=setInterval(()=>loadAll(),5*60*1000);
+document.addEventListener("visibilitychange",()=>{ if(!document.hidden) loadAll(); });
+window.addEventListener("online",()=>loadAll());
 loadCurrentAccount();
-window.addEventListener("pageshow",()=>loadCurrentAccount());
+window.addEventListener("pageshow",()=>{ loadCurrentAccount(); loadAll(); });
 
 document.addEventListener("click", function(e){
   const card=e.target.closest(".card.clickable");
