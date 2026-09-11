@@ -1,22 +1,18 @@
-# SPORTS AI Website V2.4
+# SPORTS AI Website V2.5
 
-V2.4 adds a full prediction-detail experience on top of the live V24 backend.
+V2.5 fixes prediction-detail access on mobile.
 
 ## What's new
-- Tap any prediction card to open full AI analysis.
-- Real home/away matchup names from V24 game data.
-- Confidence and visual confidence bar.
-- Team intelligence panels.
-- Flexible extraction of available team record, win percentage and scoring metrics.
-- Explainable model reasons.
-- Edge, data quality, home advantage, recent form and availability-impact signals when supplied by the backend.
-- Mobile-friendly detail view.
-- Existing live dashboard, filters, tracking and PRO waitlist remain intact.
+- Every prediction now has a clear **VIEW AI ANALYSIS** button.
+- Tapping the button opens the full prediction-detail screen.
+- Tapping the card itself also opens details as a fallback.
+- No prediction is blocked from viewing just because its backend status says `LOCKED`.
+- Existing V24 live predictions, real matchups, confidence, reasons, filters and PRO area remain intact.
 
 ## Deploy
-Replace `index.html`, `app.js`, `styles.css`, and `README.md` in the GitHub Pages repository and commit the changes.
+Replace `index.html`, `app.js`, `styles.css`, and `README.md` in the GitHub Pages repository and commit.
 
-Backend remains:
-`https://sports-ai-backend-1-qh65.onrender.com`
+Backend:
+https://sports-ai-backend-1-qh65.onrender.com
 
-No SportsDataIO API key is placed in the website.
+No SportsDataIO API key is stored in the website.

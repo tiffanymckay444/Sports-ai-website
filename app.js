@@ -123,14 +123,15 @@ function render(s="ALL"){
     let home=team(p,"home"),away=team(p,"away");
     let pick=val(p,["pick","Pick","prediction","Prediction","selection","Selection"],"Pending");
     const reasonsText=reasons(p).slice(0,2).join(" • ");
-    return `<article class="card clickable" onclick="showDetail(${p.__index})">
+    return `<article class="card clickable">
       <div class="cardtop"><span class="sport">${esc(String(val(p,["sport","Sport"],"SPORT")).toUpperCase())}</span><span class="status">${esc(val(p,["status","Status"],"PENDING"))}</span></div>
       <div class="game">${esc(home)} <span>vs</span> ${esc(away)}</div>
       ${gameMeta(p)?`<div class="meta">${esc(gameMeta(p))}</div>`:""}
       <div class="pickrow"><strong>${esc(pick)}</strong><span class="conf">${c}% confidence</span></div>
       <div class="bar"><i style="width:${Math.max(0,Math.min(100,c))}%"></i></div>
       <div class="why">${esc(reasonsText)}</div>
-      <div class="tags"><span class="tag">V24 PRO INTELLIGENCE</span><span class="tag">EXPLAINABLE</span><span class="taptag">VIEW DETAILS →</span></div>
+      <div class="tags"><span class="tag">V24 PRO INTELLIGENCE</span><span class="tag">EXPLAINABLE</span></div>
+      <button class="detailsBtn" type="button" onclick="event.stopPropagation();showDetail(${p.__index})">VIEW AI ANALYSIS →</button>
     </article>`
   }).join("")
 }
@@ -181,3 +182,16 @@ function hidePro(){modal.classList.remove("show")}
 function join(){const e=document.getElementById("email").value;if(e.includes("@"))msg.textContent="You're on the PRO waitlist."}
 window.addEventListener("keydown",e=>{if(e.key==="Escape"){hideDetail();hidePro()}})
 loadAll();
+
+document.addEventListener("click", function(e){
+  const card=e.target.closest(".card.clickable");
+  if(card && !e.target.closest("button") && !e.target.closest("a")){
+    const cards=[...document.querySelectorAll(".card.clickable")];
+    const idx=cards.indexOf(card);
+    if(idx>=0){
+      const visibleSport=document.querySelector("#filters button.active")?.dataset.sport||"ALL";
+      const visible=visibleSport==="ALL"?all:all.filter(p=>String(val(p,["sport","Sport"],"")).toUpperCase()===visibleSport);
+      if(visible[idx]) showDetail(visible[idx].__index);
+    }
+  }
+});
