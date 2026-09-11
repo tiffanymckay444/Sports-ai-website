@@ -11,9 +11,10 @@
 <div class="filters" id="filters"><button class="active" data-sport="ALL">All</button><button data-sport="NBA">NBA</button><button data-sport="MLB">MLB</button><button data-sport="NHL">NHL</button><button data-sport="NFL">NFL</button><button data-sport="SOCCER">Soccer</button></div>
 <div id="grid" class="grid"><div class="empty">Loading live predictions…</div></div>
 
+
 <section class="accuracySection">
   <div class="sectionTitle">
-    <div><span class="eyebrow">PERFORMANCE</span><h2>SPORTS AI Accuracy</h2><p>Your tracked prediction record, updated as results are evaluated.</p></div>
+    <div><span class="eyebrow">PERFORMANCE</span><h2>SPORTS AI Accuracy</h2><p>Transparent performance from your tracked predictions.</p></div>
   </div>
   <div class="accuracyTop">
     <div class="accuracyHero"><small>TRACKED WIN RATE</small><b id="accWinPct">—</b><span>Wins ÷ decided predictions</span></div>
@@ -22,10 +23,19 @@
     <div class="accuracyStat"><b id="accWins">0</b><span>Wins</span></div>
     <div class="accuracyStat"><b id="accLosses">0</b><span>Losses</span></div>
   </div>
+  <div class="performanceStrip">
+    <div><small>PUSHES</small><b id="accPushes">0</b></div>
+    <div><small>1-UNIT RESULT</small><b id="accUnits">0</b><span>units</span></div>
+    <div><small>FLAT-STAKE INDICATOR</small><b id="accRoi">—</b><span>not betting advice</span></div>
+  </div>
   <div class="accuracyPanel">
     <h3>Accuracy by sport</h3>
     <div id="accSports" class="accuracySports"></div>
     <p id="accMessage" class="accuracyMessage">Your tracked predictions will build this record automatically as V24 evaluates completed games.</p>
+  </div>
+  <div class="accuracyPanel historyPanel">
+    <h3>Prediction history</h3>
+    <div id="accHistory" class="historyList"><div class="empty small">Track predictions to build your performance history.</div></div>
   </div>
 </section>
 <section class="trackingSection">

@@ -1,11 +1,14 @@
-# SPORTS AI Website V3.0
+# SPORTS AI Website V3.1
 
-V3.0 fixes the duplicate prediction tags visible on mobile.
+V3.1 expands the performance dashboard.
 
 ## New
-- Removes the duplicate V24 PRO INTELLIGENCE / EXPLAINABLE row.
-- Adds a defensive CSS rule so a second accidental tag row cannot display.
-- Keeps the working VIEW AI ANALYSIS and TRACK buttons.
-- Keeps My Predictions and the SPORTS AI Accuracy dashboard.
+- Overall tracked/decided/win/loss/push metrics.
+- Flat 1-unit performance indicator (+1 for WIN, -1 for LOSS, 0 for PUSH).
+- Flat-stake percentage indicator for transparent performance measurement; it is not betting advice.
+- Accuracy by sport with W/L/P breakdown.
+- Prediction history showing date, matchup, pick, confidence and result.
+- Mobile-friendly performance layout.
+- Existing tracking, AI analysis and V24 live prediction feed remain intact.
 
-Backend remains connected to V24. No SportsDataIO API key is stored in the website.
+No SportsDataIO API key is stored in the website.

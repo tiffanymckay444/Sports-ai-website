@@ -61,3 +61,7 @@
 
 /* V3.0: defensive cleanup for duplicate prediction tag rows */
 .card .tags + .tags{display:none!important}
+
+.performanceStrip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}.performanceStrip>div{background:#071018;color:#fff;border-radius:14px;padding:15px}.performanceStrip small{display:block;font-size:8px;letter-spacing:1px;font-weight:900;opacity:.65}.performanceStrip b{display:inline-block;font-size:25px;margin-top:5px}.performanceStrip span{font-size:9px;margin-left:5px;opacity:.65}
+.accuracySport small{display:block;color:#7a8990;font-size:8px;margin-top:8px;font-weight:800}.historyPanel{margin-top:10px}.historyList{display:grid;gap:8px}.historyRow{display:grid;grid-template-columns:110px 1fr auto;gap:12px;align-items:center;padding:12px;border:1px solid #e1e8ea;border-radius:11px}.historyDate{font-size:9px;color:#7a8990}.historyMain b{display:block;font-size:12px}.historyMain span{display:block;color:#7a8990;font-size:9px;margin-top:4px}
+@media(max-width:650px){.performanceStrip{grid-template-columns:1fr 1fr}.performanceStrip>div:last-child{grid-column:span 2}.historyRow{grid-template-columns:1fr auto}.historyDate{grid-column:1/-1}.historyMain{min-width:0}}

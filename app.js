@@ -148,36 +148,58 @@ function toggleTrack(index){
   saveTracked(db); render(); updateTracking();
 }
 
-function updateAccuracyDashboard(){
-  const db=loadTracked();
-  const tracked=all.filter(p=>db[trackId(p)]);
-  const rows=tracked.map(p=>({p,r:localOutcome(p)}));
-  const decided=rows.filter(x=>["WIN","LOSS","PUSH"].includes(x.r));
-  const winsN=decided.filter(x=>x.r==="WIN").length;
-  const lossesN=decided.filter(x=>x.r==="LOSS").length;
-  const pushesN=decided.filter(x=>x.r==="PUSH").length;
-  const winPct=decided.length?Math.round(winsN/decided.length*100):0;
 
-  accTracked.textContent=tracked.length;
+function confidenceFor(p){return percent(val(p,["confidence","Confidence"],0))||0}
+function historyRows(){
+  const db=loadTracked();
+  return all.filter(p=>db[trackId(p)]).map(p=>({
+    p, result:localOutcome(p), confidence:confidenceFor(p),
+    sport:String(val(p,["sport","Sport"],"SPORT")).toUpperCase(),
+    matchup:`${team(p,"away")} @ ${team(p,"home")}`,
+    pick:val(p,["pick","Pick","prediction","Prediction","selection","Selection"],"—"),
+    date:gameMeta(p)||"—"
+  }));
+}
+
+function updateAccuracyDashboard(){
+  const rows=historyRows();
+  const decided=rows.filter(x=>["WIN","LOSS","PUSH"].includes(x.result));
+  const winsN=decided.filter(x=>x.result==="WIN").length;
+  const lossesN=decided.filter(x=>x.result==="LOSS").length;
+  const pushesN=decided.filter(x=>x.result==="PUSH").length;
+  const winPct=decided.length?Math.round(winsN/decided.length*100):0;
+  // Simple 1-unit flat-stake performance indicator: +1 win, -1 loss, 0 push.
+  const units=winsN-lossesN;
+  const roi=decided.length?((units/decided.length)*100):0;
+
+  accTracked.textContent=rows.length;
   accDecided.textContent=decided.length;
   accWins.textContent=winsN;
   accLosses.textContent=lossesN;
   accWinPct.textContent=decided.length?winPct+"%":"—";
+  accPushes.textContent=pushesN;
+  accUnits.textContent=(units>0?"+":"")+units.toFixed(0);
+  accRoi.textContent=decided.length?`${roi>=0?"+":""}${roi.toFixed(0)}%`:"—";
 
   const sports=["NBA","MLB","NHL","NFL","SOCCER"];
   accSports.innerHTML=sports.map(s=>{
-    const sr=rows.filter(x=>String(val(x.p,["sport","Sport"],"")).toUpperCase()===s);
-    const sd=sr.filter(x=>["WIN","LOSS","PUSH"].includes(x.r));
-    const sw=sd.filter(x=>x.r==="WIN").length;
+    const sr=rows.filter(x=>x.sport===s), sd=sr.filter(x=>["WIN","LOSS","PUSH"].includes(x.result));
+    const sw=sd.filter(x=>x.result==="WIN").length, sl=sd.filter(x=>x.result==="LOSS").length;
     const pct=sd.length?Math.round(sw/sd.length*100):null;
-    return `<div class="accuracySport"><div><b>${s}</b><span>${sd.length} decided</span></div><strong>${pct==null?"—":pct+"%"}</strong><div class="accuracyMini"><i style="width:${pct||0}%"></i></div></div>`;
+    return `<div class="accuracySport"><div><b>${s}</b><span>${sd.length} decided</span></div><strong>${pct==null?"—":pct+"%"}</strong><div class="accuracyMini"><i style="width:${pct||0}%"></i></div><small>${sw}W • ${sl}L • ${sd.filter(x=>x.result==="PUSH").length}P</small></div>`;
   }).join("");
 
-  if(!decided.length){
-    accMessage.textContent="Your tracked predictions will build this record automatically as V24 evaluates completed games.";
-  }else{
-    accMessage.textContent=`Based on ${decided.length} decided tracked prediction${decided.length===1?"":"s"}.`;
-  }
+  accHistory.innerHTML=rows.length?rows.slice().reverse().map(x=>
+    `<div class="historyRow">
+      <div class="historyDate">${esc(x.date)}</div>
+      <div class="historyMain"><b>${esc(x.matchup)}</b><span>${esc(x.sport)} • Pick ${esc(x.pick)} • ${x.confidence}% confidence</span></div>
+      <span class="result ${x.result.toLowerCase()}">${esc(x.result)}</span>
+    </div>`
+  ).join(""):`<div class="empty small">Track predictions to build your performance history.</div>`;
+
+  accMessage.textContent=decided.length
+    ? `Based on ${decided.length} decided tracked prediction${decided.length===1?"":"s"}. Flat 1-unit indicator: ${units>=0?"+":""}${units} units.`
+    : "Your tracked predictions will build this record automatically as V24 evaluates completed games.";
 }
 
 function updateTracking(){
