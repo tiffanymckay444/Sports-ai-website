@@ -1,11 +1,3 @@
-# SPORTS AI Website V3.5
+# SPORTS AI Website V3.6
 
-V3.5 fixes the SPORTS AI PRO onboarding button.
-
-## Fixed
-- START SPORTS AI PRO now opens the Create Account screen directly.
-- Removed the old placeholder checkout alert.
-- PRO → Create Account flow works without the misleading message.
-- Account modal remains mobile-first.
-
-Production authentication and real subscription/payment processing still require the backend/payment integration step.
+Account registration and sign-in are now wired to the Render API endpoints `/api/auth/register` and `/api/auth/login`. The secure backend add-on is supplied separately. Existing V24 prediction features remain intact.

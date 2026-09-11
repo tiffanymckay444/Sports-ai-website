@@ -350,9 +350,22 @@ function switchAccount(mode){
 }
 function handleAccount(e){
   e.preventDefault();
+  const status=document.getElementById("accountStatus");
   const email=document.getElementById("accountEmail").value.trim();
-  if(!email)return;
-  localStorage.setItem("sportsAIAccountDemo",email);
-  closeAccount();
-  alert(accountMode==="signup"?"Account setup is ready. Production authentication will be connected next.":"Sign-in interface is ready. Production authentication will be connected next.");
+  const password=document.getElementById("accountPassword").value;
+  const name=document.getElementById("accountName")?.value.trim();
+  status.textContent="Connecting…";
+  const endpoint=accountMode==="signup"?"/api/auth/register":"/api/auth/login";
+  fetch(`${API}${endpoint}`,{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify(accountMode==="signup"?{name,email,password}:{email,password})
+  }).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Account request failed.");return d;})
+  .then(d=>{
+    if(d.token)localStorage.setItem("sportsAIAuthToken",d.token);
+    if(d.user)localStorage.setItem("sportsAIUser",JSON.stringify(d.user));
+    status.textContent=accountMode==="signup"?"Account created successfully.":"Signed in successfully.";
+    setTimeout(closeAccount,700);
+  }).catch(err=>{
+    status.textContent=err.message.includes("fetch")?"Backend account service is not connected yet.":"Error: "+err.message;
+  });
 }

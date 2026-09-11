@@ -97,3 +97,5 @@
 .accountBenefits{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0}.accountBenefits span{background:#eef7f0;color:#278a4c;border-radius:999px;padding:7px 9px;font-size:8px;font-weight:900}
 .accountNote{text-align:center;color:#89969b;font-size:8px;line-height:1.45;margin:10px 0 0}
 @media(max-width:650px){.accountModal{align-items:flex-end;padding:0}.accountSheet{width:100%;border-radius:22px 22px 0 0;padding:25px 20px 22px}}
+
+.accountStatus{min-height:18px;text-align:center;color:#718087;font-size:9px;font-weight:700;margin-top:8px}

@@ -95,14 +95,14 @@
       <button id="signInTab" onclick="switchAccount('signin')">SIGN IN</button>
     </div>
     <form id="accountForm" onsubmit="handleAccount(event)">
-      <label>Email<input id="accountEmail" type="email" placeholder="you@example.com" required></label>
+      <label>Name<input id="accountName" type="text" placeholder="Your name" required></label><label>Email<input id="accountEmail" type="email" placeholder="you@example.com" required></label>
       <label>Password<input id="accountPassword" type="password" placeholder="••••••••" minlength="6" required></label>
-      <button class="accountPrimary" type="submit" id="accountSubmit">CREATE ACCOUNT</button>
+      <button class="accountPrimary" type="submit" id="accountSubmit">CREATE ACCOUNT</button><div id="accountStatus" class="accountStatus"></div>
     </form>
     <div class="accountBenefits">
       <span>✓ Your predictions</span><span>✓ Your tracking</span><span>✓ PRO access</span>
     </div>
-    <p class="accountNote">This V3.5 website flow is the account interface. Secure production authentication and payment processing will be connected to the backend in the next production step.</p>
+    <p class="accountNote">This V3.6 website flow is the account interface. Secure production authentication and payment processing will be connected to the backend in the next production step.</p>
   </div>
 </div>
 </body></html>
