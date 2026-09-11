@@ -147,6 +147,39 @@ function toggleTrack(index){
   else db[id]={result: outcome(p)||"PENDING", addedAt:new Date().toISOString(), sport:val(p,["sport","Sport"],"SPORT"), matchup:`${team(p,"away")} @ ${team(p,"home")}`, pick:val(p,["pick","Pick","prediction","Prediction","selection","Selection"],"Pending")};
   saveTracked(db); render(); updateTracking();
 }
+
+function updateAccuracyDashboard(){
+  const db=loadTracked();
+  const tracked=all.filter(p=>db[trackId(p)]);
+  const rows=tracked.map(p=>({p,r:localOutcome(p)}));
+  const decided=rows.filter(x=>["WIN","LOSS","PUSH"].includes(x.r));
+  const winsN=decided.filter(x=>x.r==="WIN").length;
+  const lossesN=decided.filter(x=>x.r==="LOSS").length;
+  const pushesN=decided.filter(x=>x.r==="PUSH").length;
+  const winPct=decided.length?Math.round(winsN/decided.length*100):0;
+
+  accTracked.textContent=tracked.length;
+  accDecided.textContent=decided.length;
+  accWins.textContent=winsN;
+  accLosses.textContent=lossesN;
+  accWinPct.textContent=decided.length?winPct+"%":"—";
+
+  const sports=["NBA","MLB","NHL","NFL","SOCCER"];
+  accSports.innerHTML=sports.map(s=>{
+    const sr=rows.filter(x=>String(val(x.p,["sport","Sport"],"")).toUpperCase()===s);
+    const sd=sr.filter(x=>["WIN","LOSS","PUSH"].includes(x.r));
+    const sw=sd.filter(x=>x.r==="WIN").length;
+    const pct=sd.length?Math.round(sw/sd.length*100):null;
+    return `<div class="accuracySport"><div><b>${s}</b><span>${sd.length} decided</span></div><strong>${pct==null?"—":pct+"%"}</strong><div class="accuracyMini"><i style="width:${pct||0}%"></i></div></div>`;
+  }).join("");
+
+  if(!decided.length){
+    accMessage.textContent="Your tracked predictions will build this record automatically as V24 evaluates completed games.";
+  }else{
+    accMessage.textContent=`Based on ${decided.length} decided tracked prediction${decided.length===1?"":"s"}.`;
+  }
+}
+
 function updateTracking(){
   const db=loadTracked(), entries=Object.entries(db);
   trackedCount.textContent=entries.length;
@@ -161,6 +194,7 @@ function updateTracking(){
     const r=localOutcome(p);
     return `<div class="trackrow"><div><b>${esc(team(p,"away"))} @ ${esc(team(p,"home"))}</b><small>${esc(String(val(p,["sport","Sport"],"SPORT")).toUpperCase())} • Pick ${esc(val(p,["pick","Pick","prediction","Prediction"],"—"))}</small></div><span class="result ${r.toLowerCase()}">${esc(r)}</span><button type="button" onclick="toggleTrack(${p.__index})">×</button></div>`
   }).join(""):`<div class="empty small">No saved predictions yet. Tap “TRACK” on any prediction.</div>`;
+  updateAccuracyDashboard();
 }
 
 function render(s="ALL"){
@@ -179,7 +213,7 @@ function render(s="ALL"){
       <div class="bar"><i style="width:${Math.max(0,Math.min(100,c))}%"></i></div>
       <div class="why">${esc(reasonsText)}</div>
       <div class="tags"><span class="tag">V24 PRO INTELLIGENCE</span><span class="tag">EXPLAINABLE</span></div>
-      <div class="tags"><span class="tag">V24 PRO INTELLIGENCE</span><span class="tag">EXPLAINABLE</span></div>
+      <div class="tags cleanTags"><span class="tag">V24 PRO INTELLIGENCE</span><span class="tag">EXPLAINABLE</span></div>
       <div class="v28actions">
         <button class="v28analysis" type="button" onclick="event.stopPropagation();showDetail(${p.__index})">VIEW AI ANALYSIS</button>
         <button class="v28track ${loadTracked()[trackId(p)]?'isTracked':''}" type="button" onclick="event.stopPropagation();toggleTrack(${p.__index})">${loadTracked()[trackId(p)]?'✓ TRACKED':'＋ TRACK'}</button>

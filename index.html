@@ -10,6 +10,24 @@
 <div class="metrics"><div><small>GAMES</small><b id="games">—</b></div><div><small>PREDICTIONS</small><b id="preds">—</b></div><div><small>TEAMS</small><b id="teams">—</b></div><div><small>MODEL</small><b>V24</b></div></div>
 <div class="filters" id="filters"><button class="active" data-sport="ALL">All</button><button data-sport="NBA">NBA</button><button data-sport="MLB">MLB</button><button data-sport="NHL">NHL</button><button data-sport="NFL">NFL</button><button data-sport="SOCCER">Soccer</button></div>
 <div id="grid" class="grid"><div class="empty">Loading live predictions…</div></div>
+
+<section class="accuracySection">
+  <div class="sectionTitle">
+    <div><span class="eyebrow">PERFORMANCE</span><h2>SPORTS AI Accuracy</h2><p>Your tracked prediction record, updated as results are evaluated.</p></div>
+  </div>
+  <div class="accuracyTop">
+    <div class="accuracyHero"><small>TRACKED WIN RATE</small><b id="accWinPct">—</b><span>Wins ÷ decided predictions</span></div>
+    <div class="accuracyStat"><b id="accTracked">0</b><span>Tracked</span></div>
+    <div class="accuracyStat"><b id="accDecided">0</b><span>Decided</span></div>
+    <div class="accuracyStat"><b id="accWins">0</b><span>Wins</span></div>
+    <div class="accuracyStat"><b id="accLosses">0</b><span>Losses</span></div>
+  </div>
+  <div class="accuracyPanel">
+    <h3>Accuracy by sport</h3>
+    <div id="accSports" class="accuracySports"></div>
+    <p id="accMessage" class="accuracyMessage">Your tracked predictions will build this record automatically as V24 evaluates completed games.</p>
+  </div>
+</section>
 <section class="trackingSection">
   <div class="sectionTitle"><div><span class="eyebrow">YOUR TRACKER</span><h2>My Predictions</h2><p>Save picks and follow their results over time.</p></div></div>
   <div class="trackerStats">

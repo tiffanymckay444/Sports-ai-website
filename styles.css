@@ -38,3 +38,23 @@
 .v28track{border:2px solid #159b51!important;background:#fff;color:#159b51}
 .v28track.isTracked{background:#e8f8ed!important;color:#159b51!important}
 @media(max-width:650px){.v28actions{grid-template-columns:1fr 1fr}.v28actions button{min-height:48px}}
+
+.cleanTags{margin-bottom:0}.cleanTags .tag{white-space:nowrap}
+.accuracySection{max-width:1100px;margin:58px auto 28px;padding:0 22px}
+.accuracyTop{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:10px;margin:18px 0}
+.accuracyHero,.accuracyStat{background:#fff;border:1px solid #dfe7e9;border-radius:15px;padding:18px}
+.accuracyHero small{display:block;color:#7a8990;font-size:9px;font-weight:900;letter-spacing:1.1px}
+.accuracyHero b{display:block;font-size:36px;color:#159b51;margin:5px 0}
+.accuracyHero span,.accuracyStat span{font-size:9px;color:#7a8990;text-transform:uppercase;letter-spacing:.9px;font-weight:900}
+.accuracyStat b{display:block;font-size:26px;margin-bottom:5px}
+.accuracyPanel{background:#fff;border:1px solid #dfe7e9;border-radius:15px;padding:18px}
+.accuracyPanel h3{margin:0 0 14px;font-size:18px}
+.accuracySports{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.accuracySport{background:#f5f8f9;border-radius:12px;padding:13px}
+.accuracySport div:first-child{display:flex;justify-content:space-between;gap:6px;align-items:center}
+.accuracySport b{font-size:11px}.accuracySport span{font-size:8px;color:#7a8990}
+.accuracySport strong{display:block;font-size:23px;margin:8px 0}
+.accuracyMini{height:6px;background:#dce6e9;border-radius:6px;overflow:hidden}
+.accuracyMini i{display:block;height:100%;background:#7cf29a}
+.accuracyMessage{font-size:11px;color:#7a8990;margin:15px 0 0;line-height:1.5}
+@media(max-width:650px){.accuracyTop{grid-template-columns:repeat(2,1fr)}.accuracyHero{grid-column:span 2}.accuracySports{grid-template-columns:repeat(2,1fr)}}
