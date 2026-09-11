@@ -1,100 +1,116 @@
-S SPORTS AI
-PredictionsTrackingACCOUNTSPORTS AI PRO
-SPORTS AI • V24 PRO INTELLIGENCE
-Today's AI predictions.
-Live game intelligence, confidence and explainable signals powered by your SPORTS AI backend.
-Connecting…↻
-LIVE DASHBOARD
-Games & predictions
-GAMES—
-PREDICTIONS—
-TEAMS—
-MODELV24
-AllNBAMLBNHLNFLSoccer
-TODAY'S INTELLIGENCE
-Know the pick. Understand the why.
-SPORTS AI analyzes today's games and surfaces the strongest available signals.
-LIVE DATA
-GAMES—today
-AI PICKS—predictions
-TOP CONFIDENCE—strongest pick
-TRACKED WIN %—your record
-TOP AI PICKS
-Strongest predictions
-VIEW ALL →
-Loading today's strongest picks…
-Loading live predictions…
-PERFORMANCE
-SPORTS AI Accuracy
-Transparent performance from your tracked predictions.
-TRACKED WIN RATE—Wins ÷ decided predictions
-0Tracked
-0Decided
-0Wins
-0Losses
-PUSHES0
-1-UNIT RESULT0units
-FLAT-STAKE INDICATOR—not betting advice
-Accuracy by sport
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0a1118">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>SPORTS AI — Predictions V2.4</title><link rel="stylesheet" href="styles.css">
+</head><body>
+<header><a class="brand" href="#"><span>S</span> SPORTS <b>AI</b></a>
+<nav><a href="#predictions">Predictions</a><a href="#tracking">Tracking</a><button type="button" id="accountNav" onclick="openAccount(localStorage.getItem('sportsAIAuthToken')?'signin':'signup')">ACCOUNT</button><button onclick="showPro()">SPORTS AI PRO</button></nav></header>
+<section class="hero"><div><div class="eyebrow">SPORTS AI • V24 PRO INTELLIGENCE</div><h1>Today's AI predictions.</h1><p>Live game intelligence, confidence and explainable signals powered by your SPORTS AI backend.</p></div><div class="live"><i></i><span id="connection">Connecting…</span><button onclick="loadAll()">↻</button></div></section>
+<main>
+<section class="content"><div class="heading"><div><small>LIVE DASHBOARD</small><h2>Games & predictions</h2></div><span id="date"></span></div>
+<div class="metrics"><div><small>GAMES</small><b id="games">—</b></div><div><small>PREDICTIONS</small><b id="preds">—</b></div><div><small>TEAMS</small><b id="teams">—</b></div><div><small>MODEL</small><b>V24</b></div></div>
+<div class="filters" id="filters"><button class="active" data-sport="ALL">All</button><button data-sport="NBA">NBA</button><button data-sport="MLB">MLB</button><button data-sport="NHL">NHL</button><button data-sport="NFL">NFL</button><button data-sport="SOCCER">Soccer</button></div>
 
-Your tracked predictions will build this record automatically as V24 evaluates completed games.
-Prediction history
-Track predictions to build your performance history.
-YOUR TRACKER
-My Predictions
-Save picks and follow their results over time.
-0Tracked
-0Wins
-0Losses
-0Pushes
-—Win %
-No saved predictions yet. Tap “TRACK” on any prediction.
-×
-
-TRACKING
-Model performance
-OVERALL—
-WINS—
-LOSSES—
-PUSHES—
-HOW TO READ IT
-Every pick shows the signal.
-Confidence
-A percentage showing the model's current confidence in the prediction.
-Why
-The model's available reasons and features are shown instead of hiding the signal.
-Tracking
-Completed predictions can be evaluated automatically and included in the record.
-SPORTS AI PRO
-More intelligence. One place.
-Premium access can include advanced predictions, player intelligence and AI sports chat.
-Explore PRO
-S SPORTS AIStatistical estimates only — no guaranteed outcomes.
-×
-SPORTS AI PRO
-Premium intelligence.
-Join the PRO waitlist.
-Join waitlist
+<section class="homeDashboard">
+  <div class="homeHero">
+    <div>
+      <span class="eyebrow">TODAY'S INTELLIGENCE</span>
+      <h1>Know the pick.<br><em>Understand the why.</em></h1>
+      <p>SPORTS AI analyzes today's games and surfaces the strongest available signals.</p>
+    </div>
+    <div class="heroLive"><i></i><span id="homeConnection">LIVE DATA</span></div>
+  </div>
+  <div class="homeStats">
+    <div><small>GAMES</small><b id="homeGames">—</b><span>today</span></div>
+    <div><small>AI PICKS</small><b id="homePicks">—</b><span>predictions</span></div>
+    <div><small>TOP CONFIDENCE</small><b id="homeTopConfidence">—</b><span>strongest pick</span></div>
+    <div><small>TRACKED WIN %</small><b id="homeWinRate">—</b><span>your record</span></div>
+  </div>
+  <div class="topPicksPanel">
+    <div class="topPicksHead">
+      <div><span class="eyebrow">TOP AI PICKS</span><h2>Strongest predictions</h2></div>
+      <button type="button" onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">VIEW ALL →</button>
+    </div>
+    <div id="topPicks" class="topPicks"><div class="empty small">Loading today's strongest picks…</div></div>
+  </div>
+</section>
+<div id="grid" class="grid"><div class="empty">Loading live predictions…</div></div>
 
 
-×SPORTS AI PRO
-Go deeper with PRO Intelligence.
-Unlock the complete SPORTS AI experience with advanced analysis and unlimited access.
-$12.99/ month
-✓ Unlimited AI predictions
-✓ Full prediction analysis
-✓ Player predictions
-✓ Advanced statistics
-✓ Prediction tracking
-✓ Performance dashboard
-START SPORTS AI PRO
-Production checkout will be connected in the payment step.
+<section class="accuracySection">
+  <div class="sectionTitle">
+    <div><span class="eyebrow">PERFORMANCE</span><h2>SPORTS AI Accuracy</h2><p>Transparent performance from your tracked predictions.</p></div>
+  </div>
+  <div class="accuracyTop">
+    <div class="accuracyHero"><small>TRACKED WIN RATE</small><b id="accWinPct">—</b><span>Wins ÷ decided predictions</span></div>
+    <div class="accuracyStat"><b id="accTracked">0</b><span>Tracked</span></div>
+    <div class="accuracyStat"><b id="accDecided">0</b><span>Decided</span></div>
+    <div class="accuracyStat"><b id="accWins">0</b><span>Wins</span></div>
+    <div class="accuracyStat"><b id="accLosses">0</b><span>Losses</span></div>
+  </div>
+  <div class="performanceStrip">
+    <div><small>PUSHES</small><b id="accPushes">0</b></div>
+    <div><small>1-UNIT RESULT</small><b id="accUnits">0</b><span>units</span></div>
+    <div><small>FLAT-STAKE INDICATOR</small><b id="accRoi">—</b><span>not betting advice</span></div>
+  </div>
+  <div class="accuracyPanel">
+    <h3>Accuracy by sport</h3>
+    <div id="accSports" class="accuracySports"></div>
+    <p id="accMessage" class="accuracyMessage">Your tracked predictions will build this record automatically as V24 evaluates completed games.</p>
+  </div>
+  <div class="accuracyPanel historyPanel">
+    <h3>Prediction history</h3>
+    <div id="accHistory" class="historyList"><div class="empty small">Track predictions to build your performance history.</div></div>
+  </div>
+</section>
+<section class="trackingSection">
+  <div class="sectionTitle"><div><span class="eyebrow">YOUR TRACKER</span><h2>My Predictions</h2><p>Save picks and follow their results over time.</p></div></div>
+  <div class="trackerStats">
+    <div><b id="trackedCount">0</b><span>Tracked</span></div>
+    <div><b id="trackedWins">0</b><span>Wins</span></div>
+    <div><b id="trackedLosses">0</b><span>Losses</span></div>
+    <div><b id="trackedPushes">0</b><span>Pushes</span></div>
+    <div><b id="trackedPct">—</b><span>Win %</span></div>
+  </div>
+  <div id="trackedList" class="trackedList"><div class="empty small">No saved predictions yet. Tap “TRACK” on any prediction.</div></div>
+</section>
+<div id="detailModal" class="modal detail-modal" aria-hidden="true"><div class="detailbox"><button class="x" onclick="hideDetail()">×</button><div id="detailContent"></div></div></div></section>
 
-× SPORTS AI ACCOUNT
-Create your SPORTS AI account.
-Save your tracked picks, keep your preferences, and manage PRO from one account.
-CREATE ACCOUNT SIGN IN
-NameEmail Password CREATE ACCOUNT
+<section class="dark" id="tracking"><div class="content"><div class="heading"><div><small>TRACKING</small><h2>Model performance</h2></div></div>
+<div class="record"><div><small>OVERALL</small><b id="record">—</b></div><div><small>WINS</small><b id="wins">—</b></div><div><small>LOSSES</small><b id="losses">—</b></div><div><small>PUSHES</small><b id="pushes">—</b></div></div></div></section>
 
-✓ Your predictions✓ Your tracking✓ PRO access
-Your password is securely hashed on the backend. Your session token is stored in this browser and expires after 7 days. PRO billing will be connected in a later step.
+<section class="content"><div><small>HOW TO READ IT</small><h2>Every pick shows the signal.</h2></div><div class="info"><article><b>Confidence</b><p>A percentage showing the model's current confidence in the prediction.</p></article><article><b>Why</b><p>The model's available reasons and features are shown instead of hiding the signal.</p></article><article><b>Tracking</b><p>Completed predictions can be evaluated automatically and included in the record.</p></article></div></section>
+<section class="pro"><div><small>SPORTS AI PRO</small><h2>More intelligence. One place.</h2><p>Premium access can include advanced predictions, player intelligence and AI sports chat.</p></div><button onclick="showPro()">Explore PRO</button></section>
+</main><footer><a class="brand" href="#"><span>S</span> SPORTS <b>AI</b></a><span>Statistical estimates only — no guaranteed outcomes.</span></footer>
+<div id="modal" class="modal"><div class="modalbox"><button class="x" onclick="hidePro()">×</button><div class="eyebrow">SPORTS AI PRO</div><h2>Premium intelligence.</h2><p>Join the PRO waitlist.</p><input id="email" placeholder="Email address" type="email"><button class="full" onclick="join()">Join waitlist</button><div id="msg"></div></div></div>
+<script src="app.js?v=375"></script><div id="proModal" class="proModal" aria-hidden="true"><div class="proBackdrop" onclick="closePro()"></div><div class="proSheet"><button class="proClose" onclick="closePro()">×</button><span class="eyebrow">SPORTS AI PRO</span><h2>Go deeper with<br><em>PRO Intelligence.</em></h2><p class="proLead">Unlock the complete SPORTS AI experience with advanced analysis and unlimited access.</p><div class="proPrice"><b>$12.99</b><span>/ month</span></div><div class="proFeatures"><div>✓ <b>Unlimited AI predictions</b></div><div>✓ <b>Full prediction analysis</b></div><div>✓ <b>Player predictions</b></div><div>✓ <b>Advanced statistics</b></div><div>✓ <b>Prediction tracking</b></div><div>✓ <b>Performance dashboard</b></div></div><button class="proSubscribe" onclick="openAccount('signup')">START SPORTS AI PRO</button><p class="proNote">Production checkout will be connected in the payment step.</p></div></div>
+<div id="accountModal" class="accountModal" aria-hidden="true">
+  <div class="accountBackdrop" onclick="closeAccount()"></div>
+  <div class="accountSheet">
+    <button class="accountClose" onclick="closeAccount()">×</button>
+    <span class="eyebrow">SPORTS AI ACCOUNT</span>
+    <h2 id="accountTitle">Create your<br><em>SPORTS AI account.</em></h2>
+    <p class="accountLead">Save your tracked picks, keep your preferences, and manage PRO from one account.</p>
+    <div class="accountTabs">
+      <button id="signUpTab" class="active" onclick="switchAccount('signup')">CREATE ACCOUNT</button>
+      <button id="signInTab" onclick="switchAccount('signin')">SIGN IN</button>
+    </div>
+    <div id="accountProfile" class="accountProfile" hidden>
+      <div class="profileAvatar" id="profileAvatar">S</div>
+      <div class="profileIdentity"><strong id="profileName">SPORTS AI USER</strong><span id="profileEmail">—</span></div>
+      <span id="profilePlan" class="profilePlan">FREE</span>
+    </div>
+    <form id="accountForm" onsubmit="handleAccount(event)">
+      <label>Name<input id="accountName" type="text" placeholder="Your name" autocomplete="name"></label><label>Email<input id="accountEmail" type="email" placeholder="you@example.com" autocomplete="email" required></label>
+      <label>Password<input id="accountPassword" type="password" placeholder="••••••••" minlength="8" autocomplete="current-password" required></label>
+      <button class="accountPrimary" type="submit" id="accountSubmit">CREATE ACCOUNT</button><div id="accountStatus" class="accountStatus"></div>
+    </form>
+    <div class="accountBenefits">
+      <span>✓ Your predictions</span><span>✓ Your tracking</span><span>✓ PRO access</span>
+    </div>
+    <p class="accountNote">Your password is securely hashed on the backend. Your session token is stored in this browser and expires after 7 days. PRO billing will be connected in a later step.</p>
+  </div>
+</div>
+</body></html>
