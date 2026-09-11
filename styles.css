@@ -99,3 +99,5 @@
 @media(max-width:650px){.accountModal{align-items:flex-end;padding:0}.accountSheet{width:100%;border-radius:22px 22px 0 0;padding:25px 20px 22px}}
 
 .accountStatus{min-height:18px;text-align:center;color:#718087;font-size:9px;font-weight:700;margin-top:8px}
+
+#accountNav{white-space:nowrap;max-width:210px;overflow:hidden;text-overflow:ellipsis}.accountSheet input[readonly]{background:#f3f6f7;color:#6f7d83}

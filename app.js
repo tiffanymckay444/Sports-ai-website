@@ -311,6 +311,8 @@ function hidePro(){modal.classList.remove("show")}
 function join(){const e=document.getElementById("email").value;if(e.includes("@"))msg.textContent="You're on the PRO waitlist."}
 window.addEventListener("keydown",e=>{if(e.key==="Escape"){hideDetail();hidePro()}})
 loadAll();
+loadCurrentAccount();
+window.addEventListener("pageshow",()=>loadCurrentAccount());
 
 document.addEventListener("click", function(e){
   const card=e.target.closest(".card.clickable");
@@ -334,12 +336,46 @@ function showProNotice(){openAccount("signup");}
 document.addEventListener("click",function(e){const b=e.target.closest("button,a");if(b&&b.textContent.trim()==="SPORTS AI PRO")openPro(e);});
 
 let accountMode="signup";
+const ACCOUNT_TOKEN_KEY="sportsAIAuthToken";
+const ACCOUNT_USER_KEY="sportsAIUser";
 function openAccount(mode="signup"){
   accountMode=mode;
   document.getElementById("accountModal").classList.add("open");
   switchAccount(mode);
 }
 function closeAccount(){document.getElementById("accountModal").classList.remove("open");}
+function authToken(){return localStorage.getItem(ACCOUNT_TOKEN_KEY);}
+function storedUser(){try{return JSON.parse(localStorage.getItem(ACCOUNT_USER_KEY)||"null");}catch{return null;}}
+function setAccountUI(user){
+  const b=document.getElementById("accountNav");
+  if(!b)return;
+  if(user){ b.textContent="ACCOUNT • "+(user.name||user.email||"SIGNED IN"); b.onclick=()=>openAccount("signin"); }
+  else { b.textContent="ACCOUNT"; b.onclick=()=>openAccount("signup"); }
+}
+async function loadCurrentAccount(){
+  const t=authToken();
+  if(!t){setAccountUI(null);return null;}
+  try{
+    const r=await fetch(`${API}/api/auth/me`,{headers:{Authorization:`Bearer ${t}`}});
+    if(!r.ok)throw new Error("session");
+    const d=await r.json();
+    if(d.user){localStorage.setItem(ACCOUNT_USER_KEY,JSON.stringify(d.user));setAccountUI(d.user);return d.user;}
+  }catch(e){
+    localStorage.removeItem(ACCOUNT_TOKEN_KEY);localStorage.removeItem(ACCOUNT_USER_KEY);setAccountUI(null);
+  }
+  return null;
+}
+function logoutAccount(){
+  localStorage.removeItem("sportsAIAuthToken");
+  localStorage.removeItem("sportsAIUser");
+  setAccountUI(null);
+  closeAccount();
+  showAccountMessage("Signed out.");
+}
+function showAccountMessage(text){
+  const status=document.getElementById("accountStatus");
+  if(status)status.textContent=text;
+}
 function switchAccount(mode){
   accountMode=mode;
   const signup=mode==="signup";
@@ -347,25 +383,51 @@ function switchAccount(mode){
   document.getElementById("signInTab").classList.toggle("active",!signup);
   document.getElementById("accountTitle").innerHTML=signup?'Create your<br><em>SPORTS AI account.</em>':'Welcome<br><em>back to SPORTS AI.</em>';
   document.getElementById("accountSubmit").textContent=signup?"CREATE ACCOUNT":"SIGN IN";
+  const nameLabel=document.getElementById("accountName")?.closest("label");
+  if(nameLabel)nameLabel.style.display=signup?"block":"none";
+  const existing=document.getElementById("accountLogout");
+  if(existing)existing.remove();
+  if(!signup && authToken()){
+    const user=storedUser();
+    if(user){
+      document.getElementById("accountEmail").value=user.email||"";
+      document.getElementById("accountEmail").readOnly=true;
+      document.getElementById("accountPassword").value="";
+      const b=document.createElement("button"); b.type="button"; b.id="accountLogout"; b.className="accountPrimary"; b.style.marginTop="8px"; b.textContent="SIGN OUT"; b.onclick=logoutAccount;
+      document.getElementById("accountForm").appendChild(b);
+    }
+  } else {
+    document.getElementById("accountEmail").readOnly=false;
+  }
 }
 function handleAccount(e){
   e.preventDefault();
   const status=document.getElementById("accountStatus");
-  const email=document.getElementById("accountEmail").value.trim();
+  const email=document.getElementById("accountEmail").value.trim().toLowerCase();
   const password=document.getElementById("accountPassword").value;
   const name=document.getElementById("accountName")?.value.trim();
-  status.textContent="Connecting…";
+  if(accountMode==="signup" && (!name || name.length<2)){status.textContent="Please enter your name.";return;}
+  if(password.length<8){status.textContent="Password must be at least 8 characters.";return;}
+  status.textContent="Connecting securely…";
   const endpoint=accountMode==="signup"?"/api/auth/register":"/api/auth/login";
   fetch(`${API}${endpoint}`,{
-    method:"POST",headers:{"Content-Type":"application/json"},
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
     body:JSON.stringify(accountMode==="signup"?{name,email,password}:{email,password})
-  }).then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Account request failed.");return d;})
+  })
+  .then(async r=>{const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Account request failed.");return d;})
   .then(d=>{
-    if(d.token)localStorage.setItem("sportsAIAuthToken",d.token);
-    if(d.user)localStorage.setItem("sportsAIUser",JSON.stringify(d.user));
+    if(!d.token || !d.user)throw new Error("The account service returned an incomplete response.");
+    localStorage.setItem(ACCOUNT_TOKEN_KEY,d.token);
+    localStorage.setItem(ACCOUNT_USER_KEY,JSON.stringify(d.user));
+    setAccountUI(d.user);
     status.textContent=accountMode==="signup"?"Account created successfully.":"Signed in successfully.";
+    document.getElementById("accountPassword").value="";
     setTimeout(closeAccount,700);
-  }).catch(err=>{
-    status.textContent=err.message.includes("fetch")?"Backend account service is not connected yet.":"Error: "+err.message;
+  })
+  .catch(err=>{
+    const msg=String(err.message||err);
+    if(msg.includes("Failed to fetch")||msg.includes("NetworkError"))status.textContent="Unable to reach SPORTS AI right now. Please try again.";
+    else status.textContent="Error: "+msg;
   });
 }
