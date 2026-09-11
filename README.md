@@ -1,18 +1,22 @@
-# SPORTS AI Website V2.2
+# SPORTS AI Website V2.4
 
-Polished live dashboard connected to the V24 backend.
+V2.4 adds a full prediction-detail experience on top of the live V24 backend.
 
-## V2.2 fix
-- Uses the V24 `matchup` field (`AWAY @ HOME`) as the canonical team-name source.
-- Also cross-checks `/api/v24/games` by game ID/external ID.
-- Falls back to nested team-name fields when needed.
-- Keeps the existing V2.1 design, filters, tracking, and PRO section.
+## What's new
+- Tap any prediction card to open full AI analysis.
+- Real home/away matchup names from V24 game data.
+- Confidence and visual confidence bar.
+- Team intelligence panels.
+- Flexible extraction of available team record, win percentage and scoring metrics.
+- Explainable model reasons.
+- Edge, data quality, home advantage, recent form and availability-impact signals when supplied by the backend.
+- Mobile-friendly detail view.
+- Existing live dashboard, filters, tracking and PRO waitlist remain intact.
 
-## Upload
-Replace these four files in the `Sports-ai-website` GitHub repository:
-- `index.html`
-- `app.js`
-- `styles.css`
-- `README.md`
+## Deploy
+Replace `index.html`, `app.js`, `styles.css`, and `README.md` in the GitHub Pages repository and commit the changes.
 
-GitHub Pages should continue publishing from `main` / root.
+Backend remains:
+`https://sports-ai-backend-1-qh65.onrender.com`
+
+No SportsDataIO API key is placed in the website.
