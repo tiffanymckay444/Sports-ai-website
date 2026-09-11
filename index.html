@@ -3,7 +3,7 @@
 <meta name="theme-color" content="#0a1118">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>SPORTS AI — Predictions V2.4</title><link rel="stylesheet" href="styles.css">
+<title>SPORTS AI — Predictions V3.9</title><link rel="stylesheet" href="styles.css">
 </head><body>
 <header><a class="brand" href="#"><span>S</span> SPORTS <b>AI</b></a>
 <nav><a href="#predictions">Predictions</a><a href="#tracking">Tracking</a><button type="button" id="accountNav" onclick="openAccount(localStorage.getItem('sportsAIAuthToken')?'signin':'signup')">ACCOUNT</button><button onclick="showPro()">SPORTS AI PRO</button></nav></header>
@@ -28,12 +28,19 @@
     <div><small>TOP CONFIDENCE</small><b id="homeTopConfidence">—</b><span>strongest pick</span></div>
     <div><small>TRACKED WIN %</small><b id="homeWinRate">—</b><span>your record</span></div>
   </div>
-  <div class="topPicksPanel">
-    <div class="topPicksHead">
-      <div><span class="eyebrow">TOP AI PICKS</span><h2>Strongest predictions</h2></div>
+  <div class="bestBetsPanel">
+    <div class="bestBetsHead">
+      <div><span class="eyebrow">BEST BETS DASHBOARD</span><h2>Today's strongest AI signals</h2><p>Ranked by model confidence and available data quality. Not a guarantee.</p></div>
       <button type="button" onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">VIEW ALL →</button>
     </div>
-    <div id="topPicks" class="topPicks"><div class="empty small">Loading today's strongest picks…</div></div>
+    <div class="bestBetsMeta"><span id="bestBetsUpdated">Updating…</span><span>•</span><span>Top 5 active predictions</span></div>
+    <div id="bestBets" class="bestBets"><div class="empty small">Loading today's strongest signals…</div></div>
+  </div>
+  <div class="topPicksPanel compactTopPicks">
+    <div class="topPicksHead">
+      <div><span class="eyebrow">TOP AI PICKS</span><h2>Quick view</h2></div>
+    </div>
+    <div id="topPicks" class="topPicks"><div class="empty small">Loading…</div></div>
   </div>
 </section>
 <div id="grid" class="grid"><div class="empty">Loading live predictions…</div></div>
@@ -85,7 +92,7 @@
 <section class="pro"><div><small>SPORTS AI PRO</small><h2>More intelligence. One place.</h2><p>Premium access can include advanced predictions, player intelligence and AI sports chat.</p></div><button onclick="showPro()">Explore PRO</button></section>
 </main><footer><a class="brand" href="#"><span>S</span> SPORTS <b>AI</b></a><span>Statistical estimates only — no guaranteed outcomes.</span></footer>
 <div id="modal" class="modal"><div class="modalbox"><button class="x" onclick="hidePro()">×</button><div class="eyebrow">SPORTS AI PRO</div><h2>Premium intelligence.</h2><p>Join the PRO waitlist.</p><input id="email" placeholder="Email address" type="email"><button class="full" onclick="join()">Join waitlist</button><div id="msg"></div></div></div>
-<script src="app.js?v=380"></script><div id="proModal" class="proModal" aria-hidden="true"><div class="proBackdrop" onclick="closePro()"></div><div class="proSheet"><button class="proClose" onclick="closePro()">×</button><span class="eyebrow">SPORTS AI PRO</span><h2>Go deeper with<br><em>PRO Intelligence.</em></h2><p class="proLead">Unlock the complete SPORTS AI experience with advanced analysis and unlimited access.</p><div class="proPrice"><b>$12.99</b><span>/ month</span></div><div class="proFeatures"><div>✓ <b>Unlimited AI predictions</b></div><div>✓ <b>Full prediction analysis</b></div><div>✓ <b>Player predictions</b></div><div>✓ <b>Advanced statistics</b></div><div>✓ <b>Prediction tracking</b></div><div>✓ <b>Performance dashboard</b></div></div><button class="proSubscribe" onclick="openAccount('signup')">START SPORTS AI PRO</button><p class="proNote">Production checkout will be connected in the payment step.</p></div></div>
+<script src="app.js?v=390"></script><div id="proModal" class="proModal" aria-hidden="true"><div class="proBackdrop" onclick="closePro()"></div><div class="proSheet"><button class="proClose" onclick="closePro()">×</button><span class="eyebrow">SPORTS AI PRO</span><h2>Go deeper with<br><em>PRO Intelligence.</em></h2><p class="proLead">Unlock the complete SPORTS AI experience with advanced analysis and unlimited access.</p><div class="proPrice"><b>$12.99</b><span>/ month</span></div><div class="proFeatures"><div>✓ <b>Unlimited AI predictions</b></div><div>✓ <b>Full prediction analysis</b></div><div>✓ <b>Player predictions</b></div><div>✓ <b>Advanced statistics</b></div><div>✓ <b>Prediction tracking</b></div><div>✓ <b>Performance dashboard</b></div></div><button class="proSubscribe" onclick="openAccount('signup')">START SPORTS AI PRO</button><p class="proNote">Production checkout will be connected in the payment step.</p></div></div>
 <div id="accountModal" class="accountModal" aria-hidden="true">
   <div class="accountBackdrop" onclick="closeAccount()"></div>
   <div class="accountSheet">

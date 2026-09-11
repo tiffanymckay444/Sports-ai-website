@@ -274,6 +274,42 @@ function showDetail(index){
 function hideDetail(){detailModal.classList.remove("show");detailModal.setAttribute("aria-hidden","true")}
 async function json(url){const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw new Error(`${r.status}`);return r.json()}
 
+function bestBetScore(p){
+  const c=confidenceFor(p);
+  const q=Number(quality(p));
+  const qualityBonus=Number.isFinite(q)?Math.max(0,Math.min(10,q/10)):0;
+  const status=String(val(p,["status","Status"],"PENDING")).toUpperCase();
+  const liveBonus=/LIVE|INPROGRESS|IN PROGRESS/.test(status)?-8:0;
+  return c+qualityBonus+liveBonus;
+}
+function bestBetTier(c){
+  if(c>=65)return {label:"ELITE SIGNAL",className:"elite"};
+  if(c>=60)return {label:"STRONG SIGNAL",className:"strong"};
+  if(c>=55)return {label:"WATCH",className:"watch"};
+  return {label:"LEAN",className:"lean"};
+}
+function updateBestBets(){
+  const active=all.filter(p=>{
+    const s=String(val(p,["status","Status"],"PENDING")).toUpperCase();
+    return !/FINAL|COMPLETED|CLOSED/.test(s);
+  });
+  const ranked=active.slice().sort((a,b)=>bestBetScore(b)-bestBetScore(a)).slice(0,5);
+  const el=document.getElementById("bestBets");
+  const updated=document.getElementById("bestBetsUpdated");
+  if(updated) updated.textContent=`Updated ${new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}`;
+  if(!el)return;
+  el.innerHTML=ranked.length?ranked.map((p,i)=>{
+    const c=confidenceFor(p), tier=bestBetTier(c);
+    const sport=String(val(p,["sport","Sport"],"SPORT")).toUpperCase();
+    const pick=val(p,["pick","Pick","prediction","Prediction","selection","Selection"],"Pending");
+    const q=quality(p);
+    return `<button class="bestBetRow" type="button" onclick="showDetail(${p.__index})">
+      <span class="bestBetRank">${i+1}</span>
+      <span class="bestBetMain"><small>${esc(sport)} • ${esc(tier.label)}</small><b>${esc(team(p,"away"))} @ ${esc(team(p,"home"))}</b><em>${esc(pick)}</em></span>
+      <span class="bestBetConf"><strong>${c}%</strong><span>confidence</span>${q!=null?`<small>Data ${esc(q)}</small>`:""}<i><u style="width:${Math.max(0,Math.min(100,c))}%"></u></i></span>
+    </button>`;
+  }).join(""):`<div class="empty small">No active predictions available yet.</div>`;
+}
 function updateHomeDashboard(){
   homeGames.textContent=gamesCache.length;
   homePicks.textContent=all.length;
@@ -283,6 +319,7 @@ function updateHomeDashboard(){
   const wins=tracked.filter(x=>x==="WIN").length;
   homeWinRate.textContent=tracked.length?Math.round(wins/tracked.length*100)+"%":"—";
   homeConnection.textContent=`LIVE • ${all.length} PICKS`;
+  updateBestBets();
   const top=all.slice().sort((a,b)=>confidenceFor(b)-confidenceFor(a)).slice(0,3);
   topPicks.innerHTML=top.length?top.map(p=>{
     const c=confidenceFor(p), pick=val(p,["pick","Pick","prediction","Prediction","selection","Selection"],"Pending");
