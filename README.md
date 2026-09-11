@@ -1,16 +1,11 @@
-# SPORTS AI Website V3.4
+# SPORTS AI Website V3.5
 
-V3.4 adds the account and PRO onboarding flow.
+V3.5 fixes the SPORTS AI PRO onboarding button.
 
-## New
-- Create Account / Sign In interface.
-- Email and password fields.
-- Account benefits preview.
-- PRO button now moves into account onboarding.
-- Mobile-first account sheet.
-- Demo local account state for interface testing only.
+## Fixed
+- START SPORTS AI PRO now opens the Create Account screen directly.
+- Removed the old placeholder checkout alert.
+- PRO → Create Account flow works without the misleading message.
+- Account modal remains mobile-first.
 
-## Production note
-GitHub Pages is static, so secure authentication, customer accounts, subscriptions and payment processing must be connected to the SPORTS AI backend before launch. V3.4 intentionally does not store passwords or process real payments.
-
-Existing V24 live predictions, tracking, accuracy, history, home dashboard and PRO presentation remain intact.
+Production authentication and real subscription/payment processing still require the backend/payment integration step.

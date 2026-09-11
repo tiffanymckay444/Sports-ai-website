@@ -330,7 +330,7 @@ updateTracking();
 
 function openPro(e){if(e)e.preventDefault();document.getElementById("proModal").classList.add("open");}
 function closePro(){document.getElementById("proModal").classList.remove("open");}
-function showProNotice(){alert("SPORTS AI PRO checkout is ready for the production payment connection.");}
+function showProNotice(){openAccount("signup");}
 document.addEventListener("click",function(e){const b=e.target.closest("button,a");if(b&&b.textContent.trim()==="SPORTS AI PRO")openPro(e);});
 
 let accountMode="signup";
@@ -356,13 +356,3 @@ function handleAccount(e){
   closeAccount();
   alert(accountMode==="signup"?"Account setup is ready. Production authentication will be connected next.":"Sign-in interface is ready. Production authentication will be connected next.");
 }
-document.addEventListener("click",function(e){
-  const b=e.target.closest("button,a");
-  if(!b)return;
-  const text=b.textContent.trim();
-  if(text==="START SPORTS AI PRO"){
-    e.preventDefault();
-    closePro();
-    openAccount("signup");
-  }
-});
