@@ -326,3 +326,9 @@ document.addEventListener("click", function(e){
 });
 
 updateTracking();
+
+
+function openPro(e){if(e)e.preventDefault();document.getElementById("proModal").classList.add("open");}
+function closePro(){document.getElementById("proModal").classList.remove("open");}
+function showProNotice(){alert("SPORTS AI PRO checkout is ready for the production payment connection.");}
+document.addEventListener("click",function(e){const b=e.target.closest("button,a");if(b&&b.textContent.trim()==="SPORTS AI PRO")openPro(e);});
