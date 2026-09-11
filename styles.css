@@ -58,3 +58,6 @@
 .accuracyMini i{display:block;height:100%;background:#7cf29a}
 .accuracyMessage{font-size:11px;color:#7a8990;margin:15px 0 0;line-height:1.5}
 @media(max-width:650px){.accuracyTop{grid-template-columns:repeat(2,1fr)}.accuracyHero{grid-column:span 2}.accuracySports{grid-template-columns:repeat(2,1fr)}}
+
+/* V3.0: defensive cleanup for duplicate prediction tag rows */
+.card .tags + .tags{display:none!important}

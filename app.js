@@ -212,7 +212,6 @@ function render(s="ALL"){
       <div class="pickrow"><strong>${esc(pick)}</strong><span class="conf">${c}% confidence</span></div>
       <div class="bar"><i style="width:${Math.max(0,Math.min(100,c))}%"></i></div>
       <div class="why">${esc(reasonsText)}</div>
-      <div class="tags"><span class="tag">V24 PRO INTELLIGENCE</span><span class="tag">EXPLAINABLE</span></div>
       <div class="tags cleanTags"><span class="tag">V24 PRO INTELLIGENCE</span><span class="tag">EXPLAINABLE</span></div>
       <div class="v28actions">
         <button class="v28analysis" type="button" onclick="event.stopPropagation();showDetail(${p.__index})">VIEW AI ANALYSIS</button>
