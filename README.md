@@ -1,14 +1,13 @@
-# SPORTS AI Website V3.1
+# SPORTS AI Website V3.2
 
-V3.1 expands the performance dashboard.
+V3.2 adds a polished home intelligence dashboard.
 
-## New
-- Overall tracked/decided/win/loss/push metrics.
-- Flat 1-unit performance indicator (+1 for WIN, -1 for LOSS, 0 for PUSH).
-- Flat-stake percentage indicator for transparent performance measurement; it is not betting advice.
-- Accuracy by sport with W/L/P breakdown.
-- Prediction history showing date, matchup, pick, confidence and result.
-- Mobile-friendly performance layout.
-- Existing tracking, AI analysis and V24 live prediction feed remain intact.
+- Today's game and AI pick counts
+- Highest-confidence pick
+- Tracked win rate
+- Live status
+- Top 3 strongest predictions with one-tap AI analysis
+- Mobile-first layout
+- Existing prediction filters, tracking, accuracy dashboard, history and V24 connection remain intact.
 
 No SportsDataIO API key is stored in the website.

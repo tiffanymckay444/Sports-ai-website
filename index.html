@@ -9,6 +9,30 @@
 <section class="content"><div class="heading"><div><small>LIVE DASHBOARD</small><h2>Games & predictions</h2></div><span id="date"></span></div>
 <div class="metrics"><div><small>GAMES</small><b id="games">—</b></div><div><small>PREDICTIONS</small><b id="preds">—</b></div><div><small>TEAMS</small><b id="teams">—</b></div><div><small>MODEL</small><b>V24</b></div></div>
 <div class="filters" id="filters"><button class="active" data-sport="ALL">All</button><button data-sport="NBA">NBA</button><button data-sport="MLB">MLB</button><button data-sport="NHL">NHL</button><button data-sport="NFL">NFL</button><button data-sport="SOCCER">Soccer</button></div>
+
+<section class="homeDashboard">
+  <div class="homeHero">
+    <div>
+      <span class="eyebrow">TODAY'S INTELLIGENCE</span>
+      <h1>Know the pick.<br><em>Understand the why.</em></h1>
+      <p>SPORTS AI analyzes today's games and surfaces the strongest available signals.</p>
+    </div>
+    <div class="heroLive"><i></i><span id="homeConnection">LIVE DATA</span></div>
+  </div>
+  <div class="homeStats">
+    <div><small>GAMES</small><b id="homeGames">—</b><span>today</span></div>
+    <div><small>AI PICKS</small><b id="homePicks">—</b><span>predictions</span></div>
+    <div><small>TOP CONFIDENCE</small><b id="homeTopConfidence">—</b><span>strongest pick</span></div>
+    <div><small>TRACKED WIN %</small><b id="homeWinRate">—</b><span>your record</span></div>
+  </div>
+  <div class="topPicksPanel">
+    <div class="topPicksHead">
+      <div><span class="eyebrow">TOP AI PICKS</span><h2>Strongest predictions</h2></div>
+      <button type="button" onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">VIEW ALL →</button>
+    </div>
+    <div id="topPicks" class="topPicks"><div class="empty small">Loading today's strongest picks…</div></div>
+  </div>
+</section>
 <div id="grid" class="grid"><div class="empty">Loading live predictions…</div></div>
 
 

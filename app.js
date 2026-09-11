@@ -273,12 +273,32 @@ function showDetail(index){
 }
 function hideDetail(){detailModal.classList.remove("show");detailModal.setAttribute("aria-hidden","true")}
 async function json(url){const r=await fetch(url);if(!r.ok)throw new Error(`${r.status}`);return r.json()}
+
+function updateHomeDashboard(){
+  homeGames.textContent=gamesCache.length;
+  homePicks.textContent=all.length;
+  const confs=all.map(confidenceFor).filter(x=>Number.isFinite(x));
+  homeTopConfidence.textContent=confs.length?Math.max(...confs)+"%":"—";
+  const tracked=all.map(p=>localOutcome(p)).filter(x=>["WIN","LOSS","PUSH"].includes(x));
+  const wins=tracked.filter(x=>x==="WIN").length;
+  homeWinRate.textContent=tracked.length?Math.round(wins/tracked.length*100)+"%":"—";
+  homeConnection.textContent=`LIVE • ${all.length} PICKS`;
+  const top=all.slice().sort((a,b)=>confidenceFor(b)-confidenceFor(a)).slice(0,3);
+  topPicks.innerHTML=top.length?top.map(p=>{
+    const c=confidenceFor(p), pick=val(p,["pick","Pick","prediction","Prediction","selection","Selection"],"Pending");
+    return `<button class="topPick" type="button" onclick="showDetail(${p.__index})">
+      <div><span>${esc(String(val(p,["sport","Sport"],"SPORT")).toUpperCase())}</span><b>${esc(team(p,"away"))} @ ${esc(team(p,"home"))}</b></div>
+      <div class="topPickRight"><strong>${esc(pick)}</strong><small>${c}%</small><i><em style="width:${c}%"></em></i></div>
+    </button>`
+  }).join(""):`<div class="empty small">No predictions available yet.</div>`;
+}
+
 async function loadAll(){
   connection.textContent="Updating live data…";
   try{
     const [s,p,d,g]=await Promise.all([json(API+"/api/v24/status"),json(API+"/api/v24/predictions"),json(API+"/api/v24/dashboard"),json(API+"/api/v24/games")]);
     gamesCache=unwrapRows(g,["games"]); games.textContent=val(s,["games"]); preds.textContent=val(s,["predictions"]); teams.textContent=val(s,["intelligenceTeams","teamsProfiled"]);
-    all=unwrapRows(p,["predictions"]).map((x,i)=>({...x,__index:i})); render();
+    all=unwrapRows(p,["predictions"]).map((x,i)=>({...x,__index:i})); render(); updateHomeDashboard();
     record.textContent=`${val(d,["wins"],0)}-${val(d,["losses"],0)}-${val(d,["pushes"],0)}`;
     wins.textContent=val(d,["wins"],0);losses.textContent=val(d,["losses"],0);pushes.textContent=val(d,["pushes"],0);
     connection.textContent=`Live • ${all.length} predictions loaded`; updateTracking();
