@@ -101,3 +101,13 @@
 .accountStatus{min-height:18px;text-align:center;color:#718087;font-size:9px;font-weight:700;margin-top:8px}
 
 #accountNav{white-space:nowrap;max-width:210px;overflow:hidden;text-overflow:ellipsis}.accountSheet input[readonly]{background:#f3f6f7;color:#6f7d83}
+
+/* V3.7.3 account profile */
+.accountProfile{display:flex;align-items:center;gap:12px;margin:18px 0;padding:14px;border:1px solid #dfe6e9;border-radius:18px;background:#f7faf8}
+.accountProfile[hidden]{display:none!important}
+.profileAvatar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#091119;color:#7ef19b;font-weight:900;font-size:20px}
+.profileIdentity{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+.profileIdentity strong{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profileIdentity span{font-size:13px;color:#71808a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.profilePlan{font-size:11px;font-weight:900;letter-spacing:.12em;padding:7px 9px;border-radius:999px;background:#e5f8ea;color:#31834a}
+.accountPrimary.secondary{background:#eef2f3;color:#0a1118}

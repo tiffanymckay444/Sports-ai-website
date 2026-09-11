@@ -94,6 +94,11 @@
       <button id="signUpTab" class="active" onclick="switchAccount('signup')">CREATE ACCOUNT</button>
       <button id="signInTab" onclick="switchAccount('signin')">SIGN IN</button>
     </div>
+    <div id="accountProfile" class="accountProfile" hidden>
+      <div class="profileAvatar" id="profileAvatar">S</div>
+      <div class="profileIdentity"><strong id="profileName">SPORTS AI USER</strong><span id="profileEmail">—</span></div>
+      <span id="profilePlan" class="profilePlan">FREE</span>
+    </div>
     <form id="accountForm" onsubmit="handleAccount(event)">
       <label>Name<input id="accountName" type="text" placeholder="Your name" autocomplete="name" required></label><label>Email<input id="accountEmail" type="email" placeholder="you@example.com" autocomplete="email" required></label>
       <label>Password<input id="accountPassword" type="password" placeholder="••••••••" minlength="8" autocomplete="current-password" required></label>
@@ -102,7 +107,7 @@
     <div class="accountBenefits">
       <span>✓ Your predictions</span><span>✓ Your tracking</span><span>✓ PRO access</span>
     </div>
-    <p class="accountNote">Your password is securely hashed on the backend. Your session token is stored in this browser and expires after 7 days. Payment processing will be connected in the next step.</p>
+    <p class="accountNote">Your password is securely hashed on the backend. Your session token is stored in this browser and expires after 7 days. PRO billing will be connected in a later step.</p>
   </div>
 </div>
 </body></html>
