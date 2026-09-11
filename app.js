@@ -201,7 +201,9 @@ function showDetail(index){
   const rs=reasons(p);
   detailContent.innerHTML=`
     <div class="detailhead"><div><div class="eyebrow">${esc(sport)} • AI ANALYSIS</div><h2>${esc(home)} <span>vs</span> ${esc(away)}</h2>${gameMeta(p)?`<p>${esc(gameMeta(p))}</p>`:""}</div><div class="bigconf"><b>${c}%</b><small>CONFIDENCE</small></div></div>
-    <div class="pickhero"><small>SPORTS AI PICK</small><strong>${esc(pick)}</strong><div class="detailbar"><i style="width:${c}%"></i></div></div>
+    <div class="pickhero"><small>SPORTS AI PICK</small><strong>${esc(pick)}</strong><div class="detailbar"><i style="width:${c}%"></i></div>
+      <button class="detailTrackBtn ${loadTracked()[trackId(p)]?'tracked':''}" type="button" onclick="toggleTrack(${p.__index});showDetail(${p.__index})">${loadTracked()[trackId(p)]?'✓ TRACKED — REMOVE':'＋ TRACK THIS PREDICTION'}</button>
+    </div>
     <h3>Team intelligence</h3>
     <div class="teamgrid">
       <div class="teambox"><span>HOME</span><h4>${esc(home)}</h4><div class="stats">${detailStat("Record",h.record)}${detailStat("Win %",h.winPct==null?"—":h.winPct+"%")}${detailStat("Scoring",h.pointsFor??"—")}</div></div>

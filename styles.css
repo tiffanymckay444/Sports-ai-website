@@ -27,3 +27,6 @@
 .cardactions{display:flex;gap:8px;align-items:stretch}.cardactions .detailsBtn{flex:1}.trackBtn{margin-top:12px;border:1px solid #d7e0e3;background:#fff;color:#16242b;border-radius:10px;padding:12px 14px;font-weight:900;font-size:10px;white-space:nowrap}.trackBtn.tracked{background:#e8f8ed;border-color:#bce8ca;color:#159b51}
 .empty.small{padding:16px;font-size:12px}
 @media(max-width:650px){.trackerStats{grid-template-columns:repeat(3,1fr)}.cardactions{flex-direction:column}.trackBtn{width:100%}}
+
+.detailTrackBtn{margin-top:15px;width:100%;border:0;border-radius:11px;padding:14px;background:#071018;color:#fff;font-weight:900;font-size:11px;letter-spacing:.4px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.detailTrackBtn.tracked{background:#e8f8ed;color:#159b51;border:1px solid #bce8ca}
