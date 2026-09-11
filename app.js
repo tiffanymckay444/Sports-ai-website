@@ -332,3 +332,37 @@ function openPro(e){if(e)e.preventDefault();document.getElementById("proModal").
 function closePro(){document.getElementById("proModal").classList.remove("open");}
 function showProNotice(){alert("SPORTS AI PRO checkout is ready for the production payment connection.");}
 document.addEventListener("click",function(e){const b=e.target.closest("button,a");if(b&&b.textContent.trim()==="SPORTS AI PRO")openPro(e);});
+
+let accountMode="signup";
+function openAccount(mode="signup"){
+  accountMode=mode;
+  document.getElementById("accountModal").classList.add("open");
+  switchAccount(mode);
+}
+function closeAccount(){document.getElementById("accountModal").classList.remove("open");}
+function switchAccount(mode){
+  accountMode=mode;
+  const signup=mode==="signup";
+  document.getElementById("signUpTab").classList.toggle("active",signup);
+  document.getElementById("signInTab").classList.toggle("active",!signup);
+  document.getElementById("accountTitle").innerHTML=signup?'Create your<br><em>SPORTS AI account.</em>':'Welcome<br><em>back to SPORTS AI.</em>';
+  document.getElementById("accountSubmit").textContent=signup?"CREATE ACCOUNT":"SIGN IN";
+}
+function handleAccount(e){
+  e.preventDefault();
+  const email=document.getElementById("accountEmail").value.trim();
+  if(!email)return;
+  localStorage.setItem("sportsAIAccountDemo",email);
+  closeAccount();
+  alert(accountMode==="signup"?"Account setup is ready. Production authentication will be connected next.":"Sign-in interface is ready. Production authentication will be connected next.");
+}
+document.addEventListener("click",function(e){
+  const b=e.target.closest("button,a");
+  if(!b)return;
+  const text=b.textContent.trim();
+  if(text==="START SPORTS AI PRO"){
+    e.preventDefault();
+    closePro();
+    openAccount("signup");
+  }
+});

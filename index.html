@@ -82,4 +82,27 @@
 <section class="pro"><div><small>SPORTS AI PRO</small><h2>More intelligence. One place.</h2><p>Premium access can include advanced predictions, player intelligence and AI sports chat.</p></div><button onclick="showPro()">Explore PRO</button></section>
 </main><footer><a class="brand" href="#"><span>S</span> SPORTS <b>AI</b></a><span>Statistical estimates only — no guaranteed outcomes.</span></footer>
 <div id="modal" class="modal"><div class="modalbox"><button class="x" onclick="hidePro()">×</button><div class="eyebrow">SPORTS AI PRO</div><h2>Premium intelligence.</h2><p>Join the PRO waitlist.</p><input id="email" placeholder="Email address" type="email"><button class="full" onclick="join()">Join waitlist</button><div id="msg"></div></div></div>
-<script src="app.js"></script><div id="proModal" class="proModal" aria-hidden="true"><div class="proBackdrop" onclick="closePro()"></div><div class="proSheet"><button class="proClose" onclick="closePro()">×</button><span class="eyebrow">SPORTS AI PRO</span><h2>Go deeper with<br><em>PRO Intelligence.</em></h2><p class="proLead">Unlock the complete SPORTS AI experience with advanced analysis and unlimited access.</p><div class="proPrice"><b>$12.99</b><span>/ month</span></div><div class="proFeatures"><div>✓ <b>Unlimited AI predictions</b></div><div>✓ <b>Full prediction analysis</b></div><div>✓ <b>Player predictions</b></div><div>✓ <b>Advanced statistics</b></div><div>✓ <b>Prediction tracking</b></div><div>✓ <b>Performance dashboard</b></div></div><button class="proSubscribe" onclick="showProNotice()">START SPORTS AI PRO</button><p class="proNote">Production checkout will be connected in the payment step.</p></div></div></body></html>
+<script src="app.js"></script><div id="proModal" class="proModal" aria-hidden="true"><div class="proBackdrop" onclick="closePro()"></div><div class="proSheet"><button class="proClose" onclick="closePro()">×</button><span class="eyebrow">SPORTS AI PRO</span><h2>Go deeper with<br><em>PRO Intelligence.</em></h2><p class="proLead">Unlock the complete SPORTS AI experience with advanced analysis and unlimited access.</p><div class="proPrice"><b>$12.99</b><span>/ month</span></div><div class="proFeatures"><div>✓ <b>Unlimited AI predictions</b></div><div>✓ <b>Full prediction analysis</b></div><div>✓ <b>Player predictions</b></div><div>✓ <b>Advanced statistics</b></div><div>✓ <b>Prediction tracking</b></div><div>✓ <b>Performance dashboard</b></div></div><button class="proSubscribe" onclick="showProNotice()">START SPORTS AI PRO</button><p class="proNote">Production checkout will be connected in the payment step.</p></div></div>
+<div id="accountModal" class="accountModal" aria-hidden="true">
+  <div class="accountBackdrop" onclick="closeAccount()"></div>
+  <div class="accountSheet">
+    <button class="accountClose" onclick="closeAccount()">×</button>
+    <span class="eyebrow">SPORTS AI ACCOUNT</span>
+    <h2 id="accountTitle">Create your<br><em>SPORTS AI account.</em></h2>
+    <p class="accountLead">Save your tracked picks, keep your preferences, and manage PRO from one account.</p>
+    <div class="accountTabs">
+      <button id="signUpTab" class="active" onclick="switchAccount('signup')">CREATE ACCOUNT</button>
+      <button id="signInTab" onclick="switchAccount('signin')">SIGN IN</button>
+    </div>
+    <form id="accountForm" onsubmit="handleAccount(event)">
+      <label>Email<input id="accountEmail" type="email" placeholder="you@example.com" required></label>
+      <label>Password<input id="accountPassword" type="password" placeholder="••••••••" minlength="6" required></label>
+      <button class="accountPrimary" type="submit" id="accountSubmit">CREATE ACCOUNT</button>
+    </form>
+    <div class="accountBenefits">
+      <span>✓ Your predictions</span><span>✓ Your tracking</span><span>✓ PRO access</span>
+    </div>
+    <p class="accountNote">This V3.4 website flow is the account interface. Secure production authentication and payment processing will be connected to the backend in the next production step.</p>
+  </div>
+</div>
+</body></html>
