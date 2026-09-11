@@ -404,8 +404,10 @@ function switchAccount(mode){
   document.getElementById("signInTab").classList.toggle("active",!signup);
   document.getElementById("accountTitle").innerHTML=signup?'Create your<br><em>SPORTS AI account.</em>':'Your<br><em>SPORTS AI account.</em>';
   document.getElementById("accountSubmit").textContent=signup?"CREATE ACCOUNT":"SIGN IN";
-  const nameLabel=document.getElementById("accountName")?.closest("label");
+  const nameInput=document.getElementById("accountName");
+  const nameLabel=nameInput?.closest("label");
   if(nameLabel)nameLabel.style.display=signup?"block":"none";
+  if(nameInput)nameInput.required=signup;
   const existing=document.getElementById("accountLogout");if(existing)existing.remove();
   renderAccountProfile(hasSession?storedUser():null);
   if(hasSession){
