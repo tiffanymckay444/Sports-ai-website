@@ -272,7 +272,7 @@ function showDetail(index){
   detailModal.classList.add("show"); detailModal.setAttribute("aria-hidden","false");
 }
 function hideDetail(){detailModal.classList.remove("show");detailModal.setAttribute("aria-hidden","true")}
-async function json(url){const r=await fetch(url);if(!r.ok)throw new Error(`${r.status}`);return r.json()}
+async function json(url){const r=await fetch(url,{cache:"no-store"});if(!r.ok)throw new Error(`${r.status}`);return r.json()}
 
 function updateHomeDashboard(){
   homeGames.textContent=gamesCache.length;
@@ -296,7 +296,7 @@ function updateHomeDashboard(){
 async function loadAll(){
   connection.textContent="Updating live data…";
   try{
-    const [s,p,d,g]=await Promise.all([json(API+"/api/v24/status"),json(API+"/api/v24/predictions"),json(API+"/api/v24/dashboard"),json(API+"/api/v24/games")]);
+    const todayQuery=`?date=today&_=${Date.now()}`; const [s,p,d,g]=await Promise.all([json(API+"/api/v24/status"),json(API+"/api/v24/predictions"+todayQuery),json(API+"/api/v24/dashboard"),json(API+"/api/v24/games"+todayQuery)]);
     gamesCache=unwrapRows(g,["games"]); games.textContent=val(s,["games"]); preds.textContent=val(s,["predictions"]); teams.textContent=val(s,["intelligenceTeams","teamsProfiled"]);
     all=unwrapRows(p,["predictions"]).map((x,i)=>({...x,__index:i})); render(); updateHomeDashboard();
     record.textContent=`${val(d,["wins"],0)}-${val(d,["losses"],0)}-${val(d,["pushes"],0)}`;
