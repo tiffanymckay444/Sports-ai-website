@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SPORTS AI</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#111827;--muted:#667085;--line:#e6eaf0;--accent:#1667f2;--good:#07883f;--goodbg:#e9f8ef;--dark:#101828}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}button{font:inherit}.app{max-width:760px;margin:auto;min-height:100vh;padding:20px 16px 36px}.top{display:flex;justify-content:space-between;align-items:center}.brand{font-size:24px;font-weight:900;letter-spacing:-.6px}.sub{color:var(--muted);font-size:13px;margin-top:3px}.status{font-size:12px;color:var(--good);font-weight:800}.hero{margin-top:22px;background:var(--dark);color:#fff;border-radius:24px;padding:22px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.12em;opacity:.7;font-weight:800}.hero h1{font-size:28px;margin:7px 0}.hero p{color:#c8d0dc;font-size:14px;line-height:1.45;margin:0}.tabs{display:flex;gap:8px;overflow:auto;margin:18px 0 12px}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 14px;font-weight:750;color:var(--muted);white-space:nowrap}.tab.active{background:var(--text);color:#fff;border-color:var(--text)}.sectionhead{display:flex;justify-content:space-between;align-items:end;margin:20px 2px 10px}.sectionhead h2{margin:0;font-size:19px}.count{font-size:12px;color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin:10px 0;box-shadow:0 3px 14px rgba(16,24,40,.04)}.picktop{display:flex;justify-content:space-between;gap:12px;align-items:start}.league{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.teams{font-size:17px;font-weight:850;line-height:1.35;margin-top:7px}.pick{color:var(--accent);font-size:13px;font-weight:850;margin-top:7px}.value{background:var(--goodbg);color:var(--good);border-radius:999px;padding:6px 9px;font-size:11px;font-weight:900;white-space:nowrap}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.metric{background:#f7f8fa;border-radius:12px;padding:10px}.metric span{display:block;color:var(--muted);font-size:10px}.metric b{display:block;font-size:15px;margin-top:3px}.odds{display:flex;justify-content:space-between;align-items:center;margin-top:13px;padding-top:13px;border-top:1px solid var(--line)}.odds .price{font-size:20px;font-weight:900}.odds small{color:var(--muted);font-size:11px}.locked{font-size:10px;color:var(--muted);font-weight:750}.empty,.error{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;color:var(--muted);text-align:center}.spinner{width:22px;height:22px;border:3px solid #dfe5ee;border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:4px auto 10px}@keyframes spin{to{transform:rotate(360deg)}}.footer{color:#98a2b3;font-size:11px;text-align:center;margin-top:24px;line-height:1.4}.refresh{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 11px;font-weight:800;color:var(--text)}
+@media(min-width:650px){.app{padding-top:34px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.card{margin:0}.hero h1{font-size:34px}}
+</style></head>
+<body><main class="app">
+<header class="top"><div><div class="brand">SPORTS AI</div><div class="sub">AI predictions + live market value</div></div><div class="status">● LIVE</div></header>
+<section class="hero"><div class="eyebrow">Live intelligence</div><h1>Best Bets</h1><p>Live moneylines are matched to SPORTS AI predictions so the dashboard can show the market price, model probability and value edge together.</p></section>
+<div class="tabs" id="tabs"></div>
+<div class="sectionhead"><h2>Today's Best Bets</h2><div><button class="refresh" onclick="load()">Refresh</button></div></div>
+<div id="summary" class="count">Loading live predictions…</div>
+<div id="list"><div class="empty"><div class="spinner"></div>Loading SPORTS AI…</div></div>
+<div class="footer">Odds are supplied by SportsGameOdds. Predictions are model outputs, not guarantees. Check current prices before acting.</div>
+</main>
+<script>
+const API='https://sports-ai-backend-1-qh65.onrender.com/api/v24/best-bets';
+const sports=['MLB','NFL','NBA','NHL','SOCCER'];
+let active='MLB';let raw=[];
+const $=id=>document.getElementById(id);
+function tabs(){ $('tabs').innerHTML=sports.map(s=>`<button class="tab ${s===active?'active':''}" onclick="setSport('${s}')">${s}</button>`).join('') }
+function setSport(s){active=s;tabs();load()}
+function num(v){const n=Number(v);return Number.isFinite(n)?n:null}
+function pct(v){const n=num(v);if(n===null)return '—';return `${n<=1?(n*100).toFixed(1):n.toFixed(1)}%`}
+function odds(v){const n=num(v);if(n===null)return '—';return n>0?`+${n}`:String(n)}
+function itemsFrom(j){
+  if(Array.isArray(j)) return j;
+  const preferred=['best_bets','bestBets','bets','predictions','data','results','items','rows','games','picks'];
+  for(const k of preferred){
+    const v=j?.[k];
+    if(Array.isArray(v)) return v;
+    if(v && typeof v==='object'){
+      for(const kk of preferred){ if(Array.isArray(v[kk])) return v[kk]; }
+    }
+  }
+  // Backend responses can be wrapped one or more levels deep. Find the first
+  // useful array of objects without requiring a particular response wrapper.
+  const seen=new Set();
+  function walk(v,depth){
+    if(!v || depth>4 || seen.has(v)) return [];
+    if(typeof v!=='object') return [];
+    seen.add(v);
+    if(Array.isArray(v)){
+      if(v.length && v.some(x=>x && typeof x==='object' && !Array.isArray(x))) return v;
+      for(const item of v){ const found=walk(item,depth+1); if(found.length) return found; }
+      return [];
+    }
+    for(const key of Object.keys(v)){
+      const found=walk(v[key],depth+1);
+      if(found.length) return found;
+    }
+    return [];
+  }
+  return walk(j,0);
+}
+function sportOf(x){return String(x.sport||x.league||x.league_id||x.leagueId||x.sport_id||x.sportId||'').toUpperCase()}
+function teamName(x){return x?.name||x?.team?.name||x?.prediction||x?.pick||x?.selected_team||x?.selectedTeam||x?.predicted_team||x?.predictedTeam||'Unknown team'}
+function render(){
+  const list=raw;
+  $('summary').textContent=`${list.length} live model prediction${list.length===1?'':'s'}`;
+  if(!list.length){$('list').innerHTML='<div class="empty">No matching Best Bets are available right now.</div>';return}
+  $('list').innerHTML='<div class="cards">'+list.map(card).join('')+'</div>';
+}
+function card(x){
+  const pick=teamName(x);const sport=sportOf(x)||active||'SPORTS';
+  const model=x.model_probability??x.modelProbability??x.win_probability??x.winProbability??x.confidence;
+  const edge=x.value_edge??x.valueEdge??x.edge;
+  const ev=x.expected_value??x.expectedValue??x.ev;
+  const price=x.odds??x.moneyline??x.moneyline_odds??x.moneylineOdds;
+  const provider=x.odds_provider??x.oddsProvider??'SportsGameOdds';
+  const status=String(x.value_status??x.valueStatus??'').toUpperCase();
+  const home=x.home_team??x.homeTeam??x.teams?.home?.name??x.home?.name;
+  const away=x.away_team??x.awayTeam??x.teams?.away?.name??x.away?.name;
+  const matchup=(home&&away)?`${home} vs ${away}`:(x.matchup||x.game||x.event_name||x.eventName||pick);
+  return `<article class="card"><div class="picktop"><div><div class="league">${sport}</div><div class="teams">${matchup}</div><div class="pick">AI Pick: ${pick}</div></div>${(status==='VALUE'||num(edge)>0)?'<span class="value">VALUE</span>':''}</div><div class="metrics"><div class="metric"><span>Model probability</span><b>${pct(model)}</b></div><div class="metric"><span>Value edge</span><b>${edge==null?'—':(num(edge).toFixed(1)+'%')}</b></div><div class="metric"><span>Expected value</span><b>${ev==null?'—':num(ev).toFixed(1)+'%'}</b></div></div><div class="odds"><div><small>${provider} moneyline</small><div class="price">${odds(price)}</div></div><div class="locked">${x.status||x.prediction_status||x.predictionStatus||'PREDICTION'}${x.locked_at||x.lockedAt?' • LOCKED':''}</div></div></article>`;
+}
+async function load(){
+  $('list').innerHTML='<div class="empty"><div class="spinner"></div>Refreshing live SPORTS AI…</div>';
+  $('summary').textContent=`Loading ${active} Best Bets…`;
+  try{
+    const r=await fetch(API+`?sport=${encodeURIComponent(active)}&_=${Date.now()}`,{cache:'no-store',headers:{'Accept':'application/json'}});
+    if(!r.ok)throw new Error(`HTTP ${r.status}`);
+    let j=await r.json();
+    if(typeof j==='string'){ try{ j=JSON.parse(j); }catch{} }
+    // SPORTS AI backend returns the live selections in the top-level bestBets array.
+    raw=Array.isArray(j?.bestBets)?j.bestBets:itemsFrom(j);
+    render();
+  }catch(e){
+    $('summary').textContent='Live data unavailable';
+    $('list').innerHTML=`<div class="error">SPORTS AI could not load Best Bets right now.<br><small>${e.message}</small></div>`;
+  }
+}
+tabs();load();
+</script></body></html>
